@@ -1,3 +1,5 @@
+<img alt="Check" src="packages/node--test-reporter-github/octicons/check-circle-fill-16.svg" align="right" width="64vw">
+
 [`npm`] Package [CI]
 ====================
 Simple CI GitHub [Action] for your [[`p`]]`npm` [package]s.
