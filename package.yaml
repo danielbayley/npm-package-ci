@@ -1,0 +1,47 @@
+# https://docs.npmjs.com/cli/configuring-npm/package-json
+$schema: https://json.schemastore.org/package
+version: 0.0.0
+name: npm-package-ci
+description: Simple CI for your npm packages.
+keywords:
+- ci
+- test
+- github
+- actions
+- reporter
+
+homepage: https://github.com/danielbayley/npm-package-ci#readme
+repository: danielbayley/npm-package-ci
+bugs: https://github.com/danielbayley/npm-package-ci/issues
+
+author:
+  name: Daniel Bayley
+  email: daniel.bayley@me.com
+  url: danielbayley.dev
+
+license: MIT
+funding: https://github.com/sponsors/danielbayley
+
+private: true
+type: module
+exports: ./index.js
+
+engines:
+  node: ">=20"
+  pnpm: ">=9"
+packageManager: pnpm@9.9.0
+pnpm:
+  requiredScripts: [test]
+
+dependencies:
+  node--test-reporter-github: workspace:*
+  utils: workspace:*
+
+devDependencies:
+  jsdom: ^24.1.1
+  yaml: ^2.5.0
+
+scripts:
+  pnpm:devPreinstall: yq --output-format json package.yaml > package.json
+  postinstall: node $npm_package_exports >> $GITHUB_OUTPUT
+  test: pnpm --recursive test --stream --reporter-hide-prefix
