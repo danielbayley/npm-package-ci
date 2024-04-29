@@ -1,0 +1,35 @@
+# https://docs.npmjs.com/cli/configuring-npm/package-json
+$schema: https://json.schemastore.org/package
+name: utils
+keywords:
+- library
+- utils
+- testing
+
+private: true
+type: module
+imports:
+  "#test": &test ./test.js
+exports:
+  .: ./index.js
+  ./test: *test
+
+engines:
+  node: ">=20"
+  pnpm: ">=9"
+packageManager: pnpm@9.9.0
+
+dependencies:
+  jsdom: ^24.1.1
+
+devDependencies:
+  yaml: ^2.5.0
+
+scripts:
+  prepare: yaml --single --json --indent 2 < package.yaml > package.json
+  test: >-
+    node
+    --test-reporter spec
+    --test-reporter-destination stdout
+    --experimental-test-coverage
+    --test test/unit.js
