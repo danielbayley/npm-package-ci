@@ -1,0 +1,60 @@
+# https://docs.npmjs.com/cli/configuring-npm/package-json
+$schema: https://json.schemastore.org/package
+version: 0.0.0
+name: node--test-parser
+description: Parse events from node --test into a more useable data structure.
+keywords:
+- test
+- events
+- emit
+- reporter
+- coverage
+- data
+
+homepage: https://github.com/danielbayley/npm-package-ci/tree/main/packages/node--test-parser#readme
+repository: danielbayley/npm-package-ci
+bugs: https://github.com/danielbayley/npm-package-ci/tree/main/packages/node--test-parser/issues
+
+author:
+  name: Daniel Bayley
+  email: daniel.bayley@me.com
+  url: danielbayley.dev
+
+license: MIT
+funding: https://github.com/sponsors/danielbayley
+
+type: module
+imports:
+  "#index": &index ./index.js
+  "#events": ./test/fixtures/events.json
+  "#utils": ../lib/utils.js
+exports: *index
+files: [*index]
+directories:
+  fixtures: ./test/fixtures
+
+engines:
+  node: ">=20"
+  pnpm: ">=9"
+packageManager: pnpm@9.9.0
+
+devDependencies:
+  "@danielx/civet": ^0.7.19
+  yaml: ^2.5.0
+
+scripts:
+  prepare: yaml --single --json --indent 2 < package.yaml > package.json
+
+  pretest: >-
+    NODE_OPTIONS=
+    node
+    --test-reporter $npm_package_directories_fixtures/generate.js
+    --test-reporter-destination $npm_package_imports__events
+    --experimental-test-coverage
+    --test $npm_package_directories_fixtures/tests.js || true
+  test: >-
+    node
+    --test-reporter spec
+    --test-reporter-destination stdout
+    --experimental-test-coverage
+    --test test/unit.js
