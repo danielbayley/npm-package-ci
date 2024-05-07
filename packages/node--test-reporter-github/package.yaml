@@ -1,0 +1,62 @@
+# https://docs.npmjs.com/cli/configuring-npm/package-json
+$schema: https://json.schemastore.org/package
+version: 0.0.0
+name: node--test-reporter-github
+description: Informative node --test reporter for GitHub Actions.
+keywords:
+- ci
+- test
+- github
+- actions
+- reporter
+
+homepage: https://github.com/danielbayley/npm-package-ci/tree/main/packages/node--test-reporter-github#readme
+repository: danielbayley/npm-package-ci
+bugs: https://github.com/danielbayley/npm-package-ci/tree/main/packages/node--test-reporter-github/issues
+
+author:
+  name: Daniel Bayley
+  email: daniel.bayley@me.com
+  url: danielbayley.dev
+
+license: MIT
+funding: https://github.com/sponsors/danielbayley
+
+private: true
+type: module
+imports:
+  "#index": &index ./index.js
+  "#lib": ./lib/index.js
+  "#lib/*": ./lib/*.js
+exports: *index
+files:
+- *index
+- lib/
+- octicons/
+
+engines:
+  node: ">=20"
+  pnpm: ">=9"
+packageManager: pnpm@9.9.0
+
+dependencies:
+  "@actions/core": ^1.10.1
+  node--test-parser: workspace:*
+
+devDependencies:
+  "@danielx/civet": ^0.7.19
+  "@testing-library/dom": ^10.4.0
+  capture-website-cli: ^4.0.0
+  github-markdown-css: ^5.6.1
+  jsdom: ^24.1.1
+  pageres-cli: ^8.0.0
+  yaml: ^2.5.0
+
+scripts:
+  prepare: yaml --single --json --indent 2 < package.yaml > package.json
+  test: >-
+    node
+    --test-reporter spec
+    --test-reporter-destination stdout
+    --experimental-test-coverage
+    --test test/unit.js
