@@ -1,3 +1,5 @@
+<img alt="Check" src="octicons/check-circle-fill-16.svg" align="right" width="64vw">
+
 _[Node.js]_ [`--test`] GitHub [Reporter]
 ========================================
 Informative `node` test [reporter] for GitHub [Actions].
