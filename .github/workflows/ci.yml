@@ -1,0 +1,55 @@
+# https://docs.github.com/actions/using-workflows/workflow-syntax-for-github-actions
+name: CI
+on:
+  push:
+    branches: [main]
+
+  workflow_call:
+    inputs:
+      node-version:
+        description: Node.js version, or versions in CSV format.
+        type: string
+
+      test-reporter:
+        description: Specify a node --test-reporter.
+        type: string
+
+      todo-annotate:
+        description: Annotate tests marked .todo.
+        type: boolean
+        default: true
+
+      todo-fail-warn:
+        description: Show failed tests marked .todo as warnings.
+        type: boolean
+        default: true
+
+jobs:
+  Node:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        node-version: ${{ fromJson(format('[{0}]', inputs.node-version || '20, 21, 22')) }}
+
+    env: # https://nodejs.org/api/test.html#test-reporters
+      NODE_OPTIONS: --test-reporter=spec --test-reporter-destination=stdout
+      INPUT_TODO_ANNOTATE:  ${{ inputs.todo-annotate  }}
+      INPUT_TODO_FAIL_WARN: ${{ inputs.todo-fail-warn }}
+
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v4
+
+    - name: Install Node.js ${{ matrix.node-version }} and dependencies
+      id: node
+      uses: danielbayley/npm-package-ci@main
+      with:
+        node-version:   ${{ matrix.node-version   }}
+        test-reporter:  ${{ inputs.test-reporter  }}
+        todo-annotate:  ${{ inputs.todo-annotate  }}
+        todo-fail-warn: ${{ inputs.todo-fail-warn }}
+
+    - name: Run tests
+      run: ${{ steps.node.outputs.test }}
+      env:
+        NODE_OPTIONS: ${{ env.NODE_OPTIONS }} ${{ steps.node.outputs.options }}
