@@ -14,7 +14,7 @@ on:
 
 jobs:
   CI:
-    uses: danielbayley/npm-package-ci/.github/workflows/ci.yml@main
+    uses: danielbayley/npm-package-ci/.github/workflows/ci.yml@v1
     #with:
       #node-version: 20, 21, 22
 ~~~
