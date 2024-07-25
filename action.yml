@@ -29,9 +29,7 @@ runs:
 
   - id: detect-pm
     shell: sh
-    run: |
-      npm exec --package @lerepo/detect-pm-cli --yes -- detect-pm --json |
-      yq '"package-manager=" + .name' >> $GITHUB_OUTPUT
+    run: node ${{ github.action_path }}/index.mjs >> $GITHUB_OUTPUT
 
   - uses: actions/setup-node@v4
     with:
