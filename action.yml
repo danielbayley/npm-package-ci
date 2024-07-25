@@ -12,10 +12,30 @@ inputs:
     description: Node.js version, or versions in CSV format.
     required: true
 
+  test-reporter:
+    description: Specify a node --test-reporter.
+    #default: node--test-reporter-github TODO
+
+  #test-coverage:
+    #description: Enable node --experimental-test-coverage.
+    #default: true
+
+  annotate-todo:
+    description: Annotate tests marked .todo.
+    #default: true
+
 outputs:
   package-manager:
     description: Detected package manager.
-    value: ${{ steps.detect-pm.outputs.package-manager }}
+    value: ${{ steps.node.outputs.package-manager }}
+
+  options:
+    description: NODE_OPTIONS
+    value: ${{ steps.node.outputs.options }}
+
+  test:
+    description: The scripts.test command.
+    value: ${{ steps.node.outputs.test }}
 
 runs:
   using: composite
@@ -27,22 +47,21 @@ runs:
   - shell: sh
     run: corepack enable
 
-  - id: detect-pm
+  - id: node
+    working-directory: ${{ github.action_path }}
     shell: sh
-    run: node ${{ github.action_path }}/index.mjs >> $GITHUB_OUTPUT
+    run: pnpm install
+    env:
+      INPUT_REPORTER: ${{ inputs.test-reporter }} #|| true }}
+      #INPUT_COVERAGE: ${{ inputs.test-coverage }}
+
+  - if: ${{ inputs.test-reporter }}
+    shell: sh
+    run: ${{ steps.node.outputs.add }}
 
   - uses: actions/setup-node@v4
     with:
-      cache: ${{ steps.detect-pm.outputs.package-manager }}
+      cache: ${{ steps.node.outputs.package-manager }}
 
-  - if: steps.detect-pm.outputs.package-manager != 'pnpm' && steps.detect-pm.outputs.package-manager != 'yarn'
-    shell: sh
-    run: npm ci
-
-  - if: steps.detect-pm.outputs.package-manager == 'pnpm'
-    shell: sh
-    run: pnpm install
-
-  - if: steps.detect-pm.outputs.package-manager == 'yarn'
-    shell: sh
-    run: yarn install --immutable
+  - shell: sh
+    run: ${{ steps.node.outputs.install }}
