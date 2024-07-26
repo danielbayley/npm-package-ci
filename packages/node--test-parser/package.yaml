@@ -27,11 +27,11 @@ type: module
 imports:
   "#index": &index ./index.js
   "#events": ./test/fixtures/events.json
-  "#utils": ../lib/utils.js
 exports: *index
-files: [*index]
 directories:
+  build: &build build
   fixtures: ./test/fixtures
+files: [*index]
 
 engines:
   node: ">=20"

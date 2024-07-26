@@ -29,10 +29,14 @@ imports:
   "#lib": ./lib/index.js
   "#lib/*": ./lib/*.js
 exports: *index
+directories:
+  build: &build build
+  lib: &lib lib
+  icons: &icons octicons
 files:
 - *index
-- lib/
-- octicons/
+- *lib
+- *icons
 
 engines:
   node: ">=20"
