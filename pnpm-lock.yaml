@@ -41,7 +41,7 @@ importers:
         version: 1.10.1
       node--test-parser:
         specifier: workspace:*
-        version: link:../node--test-parser
+        version: link:../node--test-parser/build
     devDependencies:
       '@danielx/civet':
         specifier: ^0.7.19
@@ -67,6 +67,7 @@ importers:
       yaml:
         specifier: ^2.5.0
         version: 2.5.0
+    publishDirectory: build
 
   packages/utils:
     dependencies:
