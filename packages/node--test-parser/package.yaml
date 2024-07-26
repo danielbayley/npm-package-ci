@@ -49,9 +49,9 @@ publishConfig:
 
 scripts:
   prepare: yaml --single --json --indent 2 < package.yaml > package.json
-
   pretest: >-
     NODE_OPTIONS=
+    pnpm prepare &&
     node
     --test-reporter $npm_package_directories_fixtures/generate.js
     --test-reporter-destination $npm_package_imports__events

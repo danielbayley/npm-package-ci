@@ -63,6 +63,7 @@ publishConfig:
 
 scripts:
   prepare: yaml --single --json --indent 2 < package.yaml > package.json
+  pretest: pnpm prepare
   test: >-
     node
     --test-reporter spec
