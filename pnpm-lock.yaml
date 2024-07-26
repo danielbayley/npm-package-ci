@@ -10,7 +10,7 @@ importers:
     dependencies:
       node--test-reporter-github:
         specifier: workspace:*
-        version: link:packages/node--test-reporter-github
+        version: link:packages/node--test-reporter-github/build
       utils:
         specifier: workspace:*
         version: link:packages/utils
@@ -33,6 +33,7 @@ importers:
       yaml:
         specifier: ^2.5.0
         version: 2.5.0
+    publishDirectory: build
 
   packages/node--test-reporter-github:
     dependencies:

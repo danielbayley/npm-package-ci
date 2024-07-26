@@ -57,6 +57,10 @@ devDependencies:
   replace-in-file: ^8.1.0
   yaml: ^2.5.0
 
+publishConfig:
+  access: public
+  directory: *build
+
 scripts:
   prepare: yaml --single --json --indent 2 < package.yaml > package.json
   test: >-
@@ -65,3 +69,21 @@ scripts:
     --test-reporter-destination stdout
     --experimental-test-coverage
     --test test/unit.js
+
+  prepublishOnly: |
+    mkdir -p $npm_package_publishConfig_directory
+    mv package.json $npm_package_publishConfig_directory
+    cp $npm_package_files_0 $npm_package_publishConfig_directory
+    cp $npm_package_files_1 $npm_package_publishConfig_directory
+    cp $npm_package_files_2 $npm_package_publishConfig_directory
+
+  version: |
+    replace-in-file version:\ $npm_{old,new}_version package.yaml
+    git commit --all --message $npm_package_version
+  postversion: |
+    git tag --annotate v$npm_package_version -m ""
+    git push --follow-tags
+
+  prerelease: git stash --all --include-untracked --keep-index --quiet
+  release: pnpm test && pnpm version
+  postrelease: pnpm publish && git stash pop --index --quiet
