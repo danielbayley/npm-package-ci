@@ -43,8 +43,8 @@ dependencies:
   utils: workspace:*
 
 devDependencies:
-  jsdom: ^24.1.1
-  yaml: ^2.5.0
+  jsdom: &catalog catalog:default
+  yaml:  *catalog
 
 scripts:
   pnpm:devPreinstall: yq --output-format json package.yaml > package.json

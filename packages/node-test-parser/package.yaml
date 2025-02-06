@@ -39,9 +39,9 @@ engines:
 packageManager: pnpm@10.2.0
 
 devDependencies:
-  "@danielx/civet": ^0.7.19
-  replace-in-file: ^8.1.0
-  yaml: ^2.5.0
+  "@danielx/civet": &catalog catalog:default
+  replace-in-file:  *catalog
+  yaml: *catalog
 
 publishConfig:
   access: public

@@ -20,10 +20,10 @@ engines:
 packageManager: pnpm@10.2.0
 
 dependencies:
-  jsdom: ^24.1.1
+  jsdom: &catalog catalog:default
 
 devDependencies:
-  yaml: ^2.5.0
+  yaml: *catalog
 
 scripts:
   prepare: yaml --single --json --indent 2 < package.yaml > package.json
