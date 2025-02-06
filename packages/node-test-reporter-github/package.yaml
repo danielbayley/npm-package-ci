@@ -1,7 +1,7 @@
 # https://docs.npmjs.com/cli/configuring-npm/package-json
 $schema: https://json.schemastore.org/package
 version: 0.0.0
-name: node--test-reporter-github
+name: node-test-reporter-github
 description: Informative node --test reporter for GitHub Actions.
 keywords:
 - ci
@@ -45,7 +45,7 @@ packageManager: pnpm@10.2.0
 
 dependencies:
   "@actions/core": ^1.10.1
-  node--test-parser: workspace:*
+  node-test-parser: workspace:*
 
 devDependencies:
   "@danielx/civet": ^0.7.19

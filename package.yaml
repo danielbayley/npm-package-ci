@@ -39,7 +39,7 @@ pnpm:
   - utils
 
 dependencies:
-  node--test-reporter-github: workspace:*
+  node-test-reporter-github: workspace:*
   utils: workspace:*
 
 devDependencies:
