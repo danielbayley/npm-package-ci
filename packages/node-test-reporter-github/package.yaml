@@ -10,9 +10,9 @@ keywords:
 - actions
 - reporter
 
-homepage: https://github.com/danielbayley/npm-package-ci/tree/main/packages/node--test-reporter-github#readme
+homepage: https://github.com/danielbayley/npm-package-ci/tree/main/packages/node-test-reporter-github#readme
 repository: danielbayley/npm-package-ci
-bugs: https://github.com/danielbayley/npm-package-ci/tree/main/packages/node--test-reporter-github/issues
+bugs: https://github.com/danielbayley/npm-package-ci/tree/main/packages/node-test-reporter-github/issues
 
 author:
   name: Daniel Bayley

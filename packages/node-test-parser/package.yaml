@@ -11,9 +11,9 @@ keywords:
 - coverage
 - data
 
-homepage: https://github.com/danielbayley/npm-package-ci/tree/main/packages/node--test-parser#readme
+homepage: https://github.com/danielbayley/npm-package-ci/tree/main/packages/node-test-parser#readme
 repository: danielbayley/npm-package-ci
-bugs: https://github.com/danielbayley/npm-package-ci/tree/main/packages/node--test-parser/issues
+bugs: https://github.com/danielbayley/npm-package-ci/tree/main/packages/node-test-parser/issues
 
 author:
   name: Daniel Bayley
