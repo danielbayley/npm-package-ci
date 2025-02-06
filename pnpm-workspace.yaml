@@ -4,7 +4,7 @@ packages:
 
 # https://pnpm.io/catalogs
 catalog:
-  "@danielx/civet": ^0.7.19
-  jsdom: ^24.1.1
-  replace-in-file: ^8.1.0
-  yaml: ^2.5.0
+  "@danielx/civet": ^0.9.6
+  jsdom: ^26.0.0
+  replace-in-file: ^8.3.0
+  yaml: ^2.7.0
