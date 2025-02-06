@@ -40,7 +40,6 @@ packageManager: pnpm@10.2.0
 
 devDependencies:
   "@danielx/civet": &catalog catalog:default
-  replace-in-file:  *catalog
   yaml: *catalog
 
 publishConfig:
@@ -70,7 +69,7 @@ scripts:
     cp $npm_package_files_0 $npm_package_publishConfig_directory
 
   version: |
-    replace-in-file version:\ $npm_{old,new}_version package.yaml
+    sed -i "" -E "s/^(version: *)$npm_old_version\$/\\1$npm_new_version/" package.yaml
     git commit --all --message $npm_package_version
   postversion: |
     git tag --annotate v$npm_package_version -m ""

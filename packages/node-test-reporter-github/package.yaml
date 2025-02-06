@@ -54,7 +54,6 @@ devDependencies:
   github-markdown-css: ^5.6.1
   jsdom: *catalog
   pageres-cli: ^8.0.0
-  replace-in-file: *catalog
   yaml: *catalog
 
 publishConfig:
@@ -79,7 +78,7 @@ scripts:
     cp $npm_package_files_2 $npm_package_publishConfig_directory
 
   version: |
-    replace-in-file version:\ $npm_{old,new}_version package.yaml
+    sed -i "" -E "s/^(version: *)$npm_old_version\$/\\1$npm_new_version/" package.yaml
     git commit --all --message $npm_package_version
   postversion: |
     git tag --annotate v$npm_package_version -m ""
