@@ -4,7 +4,7 @@ Parse [events] from `node` [test runner] into a more useable data structure.
 
 ## Install
 ~~~ sh
-[p]npm install node--test-parser --save
+[p]npm install node-test-parser --save
 ~~~
 
 License

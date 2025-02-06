@@ -6,7 +6,7 @@ Informative `node` test [reporter] for GitHub [Actions].
 
 ## Usage
 ~~~ sh
-node --test-reporter node--test-reporter-github --test tests/*.js
+node --test-reporter node-test-reporter-github --test tests/*.js
 ~~~
 Basic `.github/workflows/ci.yml` [reusable workflow] to run [`scripts`].[`test`]s:
 ~~~ yaml
@@ -32,7 +32,7 @@ jobs:
 
 ## Install
 ~~~ sh
-[p]npm install node--test-reporter-github --save-dev
+[p]npm install node-test-reporter-github --save-dev
 ~~~
 
 License
