@@ -1,5 +1,5 @@
 import core from "@actions/core"
-import { parse } from "node--test-parser"
+import { parse } from "node-test-parser"
 import { toTable, detailsFrom, coverageFrom, annotate, preview } from "#lib"
 
 const { GITHUB_ACTIONS } = process.env

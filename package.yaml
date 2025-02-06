@@ -33,8 +33,8 @@ pnpm:
   requiredScripts: [test]
   onlyBuiltDependencies:
   - *name
-  - node--test-parser
-  - node--test-reporter-github
+  - node-test-parser
+  - node-test-reporter-github
   - utils
 
 dependencies:
