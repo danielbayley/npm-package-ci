@@ -42,7 +42,7 @@ runs:
       node-version: ${{ inputs.node-version }}
 
   - shell: sh
-    run: corepack enable
+    run: npm install --global --force corepack && corepack enable
 
   - id: node
     working-directory: ${{ github.action_path }}
