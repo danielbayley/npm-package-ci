@@ -1,7 +1,7 @@
 # https://docs.npmjs.com/cli/configuring-npm/package-json
 $schema: https://json.schemastore.org/package
 version: 0.0.0
-name: npm-package-ci
+name: &name npm-package-ci
 description: Simple CI for your npm packages.
 keywords:
 - ci
@@ -32,6 +32,11 @@ engines:
 packageManager: pnpm@10.2.0
 pnpm:
   requiredScripts: [test]
+  onlyBuiltDependencies:
+  - *name
+  - node--test-parser
+  - node--test-reporter-github
+  - utils
 
 dependencies:
   node--test-reporter-github: workspace:*
