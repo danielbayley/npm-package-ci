@@ -35,8 +35,8 @@ files: [*index]
 
 engines:
   node: ">=20"
-  pnpm: ">=9"
-packageManager: pnpm@9.9.0
+  pnpm: ">=10"
+packageManager: pnpm@10.2.0
 
 devDependencies:
   "@danielx/civet": ^0.7.19
