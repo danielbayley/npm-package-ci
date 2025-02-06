@@ -1,4 +1,4 @@
-# https://docs.npmjs.com/cli/configuring-npm/package-json
+# https://docs.npmjs.com/cli/configuring-npm/package-json
 $schema: https://json.schemastore.org/package
 version: 0.0.0
 name: npm-package-ci
