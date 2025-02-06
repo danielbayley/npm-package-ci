@@ -26,7 +26,7 @@ devDependencies:
   yaml: *catalog
 
 scripts:
-  prepare: yaml --single --json --indent 2 < package.yaml > package.json
+  prepare: yaml --single --json --indent ${TABSIZE:-2} < package.yaml > package.json
   test: >-
     node
     --test-reporter spec

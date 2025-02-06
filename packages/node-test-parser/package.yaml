@@ -48,7 +48,7 @@ publishConfig:
   directory: *build
 
 scripts:
-  prepare: yaml --single --json --indent 2 < package.yaml > package.json
+  prepare: yaml --single --json --indent ${TABSIZE:-2} < package.yaml > package.json
   pretest: >-
     NODE_OPTIONS=
     pnpm prepare &&
