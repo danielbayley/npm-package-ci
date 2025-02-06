@@ -43,5 +43,5 @@ devDependencies:
 
 scripts:
   pnpm:devPreinstall: yq --output-format json package.yaml > package.json
-  postinstall: node $npm_package_exports >> $GITHUB_OUTPUT
+  postinstall: node index.js >> $GITHUB_OUTPUT
   test: pnpm --recursive test --stream --reporter-hide-prefix
