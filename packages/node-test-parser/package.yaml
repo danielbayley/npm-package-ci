@@ -52,10 +52,10 @@ scripts:
     NODE_OPTIONS=
     pnpm prepare &&
     node
-    --test-reporter $npm_package_directories_fixtures/generate.js
-    --test-reporter-destination $npm_package_imports__events
+    --test-reporter ./test/fixtures/generate.js
+    --test-reporter-destination ./test/fixtures/events.json
     --experimental-test-coverage
-    --test $npm_package_directories_fixtures/tests.js || true
+    --test ./test/fixtures/tests.js || true
   test: >-
     node
     --test-reporter spec

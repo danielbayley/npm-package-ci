@@ -71,11 +71,9 @@ scripts:
     --test test/unit.js
 
   prepublishOnly: |
-    mkdir -p $npm_package_publishConfig_directory
-    mv package.json $npm_package_publishConfig_directory
-    cp $npm_package_files_0 $npm_package_publishConfig_directory
-    cp $npm_package_files_1 $npm_package_publishConfig_directory
-    cp $npm_package_files_2 $npm_package_publishConfig_directory
+    mkdir -p build
+    mv package.json build
+    cp index.js lib octicons build
 
   version: |
     sed -i "" -E "s/^(version: *)$npm_old_version\$/\\1$npm_new_version/" package.yaml
