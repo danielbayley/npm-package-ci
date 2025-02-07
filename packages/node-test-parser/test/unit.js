@@ -22,7 +22,7 @@ describe("`parse`", async () => {
 
   it("should flatten `events` data structure", () => {
     const { data: test } =        events.find(e => e.type === "test:pass")
-    const { testNumber } = parsed.events.find(e => e.type === "pass")
+    const { testNumber } = parsed.events.find(e => e.name === "pass" && e.testNumber)
     const { data: diagnostic } =  events.find(e => e.type === "test:diagnostic")
     const { message }    = parsed.events.find(e => e.type === "diagnostic")
     const { data: { summary }} =  events.find(e => e.type === "test:coverage")
