@@ -1,4 +1,4 @@
-<img alt="Check" src="octicons/check-circle-fill-16.svg" align="right" width="64vw">
+<img title="Check" alt="Check" src="octicons/check-circle-fill-16.svg" align="right" width="64vw">
 
 _[Node.js]_ [`--test`] GitHub [Reporter]
 ========================================
