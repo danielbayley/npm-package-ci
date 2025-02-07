@@ -28,7 +28,7 @@ exports: ./index.js
 engines:
   node: ">=20"
   pnpm: ">=10"
-packageManager: pnpm@10.2.0
+packageManager: pnpm@10.2.1
 pnpm:
   requiredScripts: [test]
   onlyBuiltDependencies:

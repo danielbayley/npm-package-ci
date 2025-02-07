@@ -17,7 +17,7 @@ exports:
 engines:
   node: ">=20"
   pnpm: ">=10"
-packageManager: pnpm@10.2.0
+packageManager: pnpm@10.2.1
 
 dependencies:
   jsdom: &catalog catalog:default
