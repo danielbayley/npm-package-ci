@@ -3,7 +3,10 @@ import { read } from "utils"
 
 let { INPUT_REPORTER: reporter } = process.env
 const { dirname } = import.meta
-const { dependencies } = await read(`${dirname}/package.json`).then(JSON.parse)
+const { dependencies } = await read(`${dirname}/package.json`)
+  .then(JSON.parse)
+  .catch(console.error)
+
 const [name] = Object.keys(dependencies)
 const packageJSON = "package.json"
 const files = {

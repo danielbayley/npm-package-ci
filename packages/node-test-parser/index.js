@@ -1,5 +1,5 @@
-import { fileURLToPath } from "node:url"
-import { arrayFrom } from "utils"
+import {fileURLToPath} from "node:url"
+import {arrayFrom} from "utils"
 
 const stack = []
 export const parse = async report => arrayFrom(report)
@@ -33,7 +33,7 @@ export const parse = async report => arrayFrom(report)
 
       case "diagnostic":
         if (message == null) break
-        const [tally, n] = message.split(" ")
+        const [tally, n] = message.split(/\s+/)
         report.diagnostics ??= {}
         report.diagnostics[tally] = parseFloat(n)
     }

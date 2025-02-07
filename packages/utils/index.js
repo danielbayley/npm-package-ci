@@ -2,9 +2,11 @@ import { mkdir, readFile, writeFile } from "node:fs/promises"
 import path, { dirname, resolve }     from "node:path"
 import { JSDOM } from "jsdom"
 
+const { encoding } = new TextDecoder()
+
 export const relative = (from, to) => path.relative(from, resolve(from, to))
 
-export const read = file => readFile(file, { encoding: "utf8" })
+export const read = file => readFile(file, { encoding })
 
 export async function write(path, content = "") {
   const parent = dirname(path)
