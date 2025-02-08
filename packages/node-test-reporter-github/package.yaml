@@ -53,10 +53,6 @@ devDependencies:
   jsdom: *catalog
   yaml:  *catalog
 
-publishConfig:
-  access: public
-  directory: *build
-
 scripts:
   prepare: yaml --single --json --indent ${TABSIZE:-2} < package.yaml > package.json
   pretest: pnpm prepare

@@ -22,7 +22,7 @@ importers:
     dependencies:
       node-test-reporter-github:
         specifier: workspace:^
-        version: link:packages/node-test-reporter-github/build
+        version: link:packages/node-test-reporter-github
       utils:
         specifier: workspace:^
         version: link:packages/utils
@@ -42,7 +42,6 @@ importers:
       yaml:
         specifier: catalog:default
         version: 2.7.0
-    publishDirectory: build
 
   packages/node-test-reporter-github:
     dependencies:
@@ -51,7 +50,7 @@ importers:
         version: 1.11.1
       '@danielbayley/node-test-parser':
         specifier: workspace:^
-        version: link:../node-test-parser/build
+        version: link:../node-test-parser
     devDependencies:
       '@danielx/civet':
         specifier: catalog:default
@@ -65,7 +64,6 @@ importers:
       yaml:
         specifier: catalog:default
         version: 2.7.0
-    publishDirectory: build
 
   packages/utils:
     dependencies:
