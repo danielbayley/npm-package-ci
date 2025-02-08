@@ -21,12 +21,13 @@ const files = {
 const ls = await readdir(".")
 const path = ls.find(path => files[path])
 const json = await read(packageJSON).catch(() => "{}")
-const { packageManager, engines } = JSON.parse(json)
+const { packageManager, devEngines, engines } = JSON.parse(json)
 
 let [pm] = packageManager?.split("@") ?? Object
   .values(files)
   .filter(pm => engines?.[pm])
 
+pm ??= devEngines?.packageManager?.name
 pm ??= files[path] ?? "npm"
 console.log(`package-manager=${pm}`)
 
