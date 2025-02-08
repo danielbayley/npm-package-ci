@@ -23,7 +23,7 @@ jobs:
 
 > [!NOTE]
 > Optionally specify `with.node-version`, or version*s* in [CSV] format.
-> [Node] versions `20`–`latest` will be tested by default.
+> [Node] versions [`20`]–[`latest`] will be tested by default.
 
 > [!WARNING]
 > [`corepack`] requires a [lockfile] to operate.
@@ -35,7 +35,9 @@ License
 [MIT]:                LICENSE.md
 [Daniel Bayley]:      https://github.com/danielbayley
 
-[node]:               https://nodejs.org/en/about/previous-releases#looking-for-latest-release-of-a-version-branch
+[node]:               https://nodejs.org/about/previous-releases#looking-for-latest-release-of-a-version-branch
+[`20`]:               https://github.com/nodejs/node/blob/main/doc/changelogs/CHANGELOG_V20.md
+[`latest`]:           https://github.com/actions/setup-node#supported-version-syntax
 [`corepack`]:         https://nodejs.org/api/corepack.html
 
 [lockfile]:           https://pnpm.io/git#lockfiles
