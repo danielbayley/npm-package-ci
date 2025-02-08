@@ -6,7 +6,7 @@ Simple CI GitHub [Action] for your [[`p`]]`npm` [package]s.
 
 Usage
 -----
-Basic `.github/workflows/ci.yml` [reusable workflow] to run [`scripts`].[`test`]s:
+Basic `.github/workflows/ci.yaml` [reusable workflow] to run [`scripts`].[`test`]s:
 ~~~ yaml
 name: CI
 on:
@@ -16,7 +16,7 @@ on:
 
 jobs:
   CI:
-    uses: danielbayley/npm-package-ci/.github/workflows/ci.yml@v1
+    uses: danielbayley/npm-package-ci/.github/workflows/ci.yaml@v1
     #with:
       #node-version: 21, 22
 ~~~
