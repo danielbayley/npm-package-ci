@@ -30,12 +30,7 @@ engines:
   pnpm: ">=10"
 packageManager: pnpm@10.2.1
 pnpm:
-  requiredScripts: [test]
-  onlyBuiltDependencies:
-  - *name
-  - node-test-parser
-  - node-test-reporter-github
-  - utils
+  requiredScripts: [prepare, test]
 
 dependencies:
   node-test-reporter-github: workspace:^
@@ -46,6 +41,7 @@ devDependencies:
   yaml:  *catalog
 
 scripts:
+  test: pnpm --stream --reporter-hide-prefix --recursive test
+  prepare: pnpm --recursive prepare
   pnpm:devPreinstall: yq --output-format json package.yaml > package.json
   postinstall: node index.js >> $GITHUB_OUTPUT
-  test: pnpm --stream --reporter-hide-prefix --recursive test

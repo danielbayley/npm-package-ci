@@ -28,10 +28,9 @@ imports:
   "#index": &index ./index.js
   "#events": ./test/fixtures/events.json
 exports: *index
-directories:
-  build: &build build
-  fixtures: ./test/fixtures
 files: [*index]
+directories: &directories
+  fixtures: ./test/fixtures
 
 engines:
   node: ">=20"
@@ -42,27 +41,17 @@ devDependencies:
   "@danielx/civet": &catalog catalog:default
   yaml: *catalog
 
+config: *directories
 scripts:
   prepare: yaml --single --json --indent ${TABSIZE:-2} < package.yaml > package.json
-  pretest: >-
-    NODE_OPTIONS=
-    pnpm prepare &&
-    node
-    --test-reporter ./test/fixtures/generate.js
-    --test-reporter-destination ./test/fixtures/events.json
-    --experimental-test-coverage
-    --test ./test/fixtures/tests.js || true
-  test: >-
-    node
-    --test-reporter spec
-    --test-reporter-destination stdout
-    --experimental-test-coverage
-    --test test/unit.js
 
-  prepublishOnly: |
-    mkdir -p $npm_package_publishConfig_directory
-    mv package.json $npm_package_publishConfig_directory
-    cp $npm_package_files_0 $npm_package_publishConfig_directory
+  test: node --experimental-test-coverage --test test/unit.js
+  pretest: >-
+    NODE_OPTIONS= node
+    --test-reporter $npm_package_config_fixtures/generate.js
+    --test-reporter-destination $npm_package_config_fixtures/events.json
+    --experimental-test-coverage
+    --test $npm_package_config_fixtures/tests.js || true
 
   version: |
     sed -i "" -E "s/^(version: *)$npm_old_version\$/\\1$npm_new_version/" package.yaml

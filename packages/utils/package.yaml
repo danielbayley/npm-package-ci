@@ -27,9 +27,4 @@ devDependencies:
 
 scripts:
   prepare: yaml --single --json --indent ${TABSIZE:-2} < package.yaml > package.json
-  test: >-
-    node
-    --test-reporter spec
-    --test-reporter-destination stdout
-    --experimental-test-coverage
-    --test test/unit.js
+  test: node --experimental-test-coverage --test test/unit.js
