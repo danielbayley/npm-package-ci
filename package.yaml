@@ -38,8 +38,8 @@ pnpm:
   - utils
 
 dependencies:
-  node-test-reporter-github: workspace:*
-  utils: workspace:*
+  node-test-reporter-github: workspace:^
+  utils: workspace:^
 
 devDependencies:
   jsdom: &catalog catalog:default
