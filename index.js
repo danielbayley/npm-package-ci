@@ -20,8 +20,8 @@ const files = {
 }
 const ls = await readdir(".")
 const path = ls.find(path => files[path])
-const content = await read(packageJSON).catch(error => "{}")
-const { packageManager, engines } = JSON.parse(content)
+const json = await read(packageJSON).catch(() => "{}")
+const { packageManager, engines } = JSON.parse(json)
 
 let [pm] = packageManager?.split("@") ?? Object
   .values(files)
