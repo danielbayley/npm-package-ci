@@ -48,9 +48,7 @@ dependencies:
   "@danielbayley/node-test-parser": workspace:^
 
 devDependencies:
-  "@danielx/civet": &catalog catalog:default
-  github-markdown-css: ^5.6.1
-  jsdom: *catalog
+  jsdom: &catalog catalog:default
   yaml:  *catalog
 
 scripts:
