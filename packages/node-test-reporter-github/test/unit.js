@@ -1,7 +1,7 @@
 import { Readable } from "node:stream"
 import core from "@actions/core"
 
-import { describe, it, mock, assert } from "utils/test"
+import { assert, describe,  it, beforeEach, afterEach, mock  } from "utils/test"
 import { relative, read, write, capitalize, arrayFrom, toDOM } from "utils"
 
 import { toTable, detailsFrom, coverageFrom, annotate, render, preview } from "#lib"
@@ -56,16 +56,19 @@ describe("`annotate`", () => {
       }
     })
 
-  mock.method(core, "error")
-  mock.method(core, "warning")
-  mock.method(core, "notice")
-  annotate(events)
+  afterEach(mock.resetCalls)
+  beforeEach(() => {
+    mock.method(core, "error")
+    mock.method(core, "warning")
+    mock.method(core, "notice")
+    annotate(events)
+  })
 
   it("should annotate failed tests as errors", () => {
     const [fail] = core.error.mock.calls
     const { title, file: path, startLine } = fail.arguments.at(-1)
 
-    assert.equal(core.error.mock.calls.length, 1)
+    assert.equal(core.error.mock.callCount(), 1)
     assert.equal(title, "fail")
     assert.equal(file, path)
     assert.equal(startLine, 4)
@@ -74,7 +77,7 @@ describe("`annotate`", () => {
   it("should annotate passed tests marked `.todo` as notices", () => {
     const [pass] = core.notice.mock.calls
     const { title, file: path, startLine } = pass.arguments.at(-1)
-    const { name } = events[1]
+    const { name } = events.at(1)
 
     assert.equal(core.notice.mock.callCount(), 1)
     assert.equal(title, `TODO: ${name}`)
