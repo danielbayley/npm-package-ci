@@ -45,7 +45,7 @@ describe("`arrayFrom`", async () => {
   })
 
   it("should return an array from a readable stream", async () => {
-    const stream  = await Readable.from(array)
+    const stream  = Readable.from(array)
     const compare = await arrayFrom(stream)
     assert.deepEqual(compare, array)
   })
