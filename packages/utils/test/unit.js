@@ -1,10 +1,15 @@
+import fs from "node:fs/promises"
 import { sep } from "node:path"
 import { Readable } from "node:stream"
 
-import { describe, it, assert } from "utils/test"
-import { relative, write, capitalize, rangesFrom, arrayFrom, toDOM } from "utils"
+import { before, after, describe, it, assert } from "utils/test"
+import { relative, load, write, capitalize, rangesFrom, arrayFrom, toDOM } from "utils"
 
 const { dirname, filename } = import.meta
+const fixtures  = `${dirname}/fixtures`
+const recursive = true
+before(() => fs.mkdir(fixtures, { recursive }))
+after(()  => fs.rm(fixtures,    { recursive, force: true }))
 
 describe("`relative`", () => {
   it("should resolve the relative path from a given directory", () => {
@@ -14,9 +19,28 @@ describe("`relative`", () => {
   })
 })
 
+describe("`load`", () => {
+  const data = { a: 1 }
+
+  it("should read and parse JSON files", async () => {
+    const json = JSON.stringify(data)
+    const file = `${fixtures}/data.json`
+    await fs.writeFile(file, json)
+    const parsed = await load(file)
+    assert.deepEqual(parsed, data)
+  })
+
+  it("should read and parse YAML files", async () => {
+    const file = `${fixtures}/data.yaml`
+    await fs.writeFile(file, "a: 1")
+    const parsed = await load(file)
+    assert.deepEqual(parsed, data)
+  })
+})
+
 describe("`write`", () =>
   it("should write to file path, creating any intermediate directories as required", async () => {
-    const file = await write(`${dirname}/fixtures/file.json`, "{}")
+    const file = await write(`${fixtures}/file.json`, "{}")
     await assert.exists(file)
   }))
 

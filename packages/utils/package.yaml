@@ -1,6 +1,6 @@
 # https://docs.npmjs.com/cli/configuring-npm/package-json
 $schema: https://json.schemastore.org/package
-name: utils
+name: utils #&name
 keywords:
 - library
 - utils
@@ -11,16 +11,25 @@ type: module
 imports:
   "#test": &test ./test.js
 exports:
-  .: ./index.js
+  .: ./index.mjs
   ./test: *test
+  ./scripts/*: ./scripts/*.*js
 
 engines:
   node: ">=20"
   pnpm: ">=10"
-packageManager: pnpm@10.2.1
+packageManager: pnpm@10.4.1
+#pnpm:
+  #onlyBuiltDependencies: [*name]
 
 dependencies:
   jsdom: &catalog catalog:default
+
+optionalDependencies: #peerDependencies:
+  yaml: *catalog
+#peerDependenciesMeta:
+  #yaml:
+    #optional: true
 
 devDependencies:
   yaml: *catalog
