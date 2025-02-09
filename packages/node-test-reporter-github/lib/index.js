@@ -1,5 +1,5 @@
 import core from "@actions/core"
-import { relative, capitalize, rangesFrom } from "utils"
+import { relative, blank, capitalize, rangesFrom } from "utils"
 import * as html from "#lib/html"
 
 const {
@@ -18,7 +18,7 @@ const icons = {
 icons.todo = icons.skip
 
 export function toTable(entries, [data, n]) {
-  var [data, unit = ""] = capitalize(data).split("_")
+  var [data, unit = blank] = capitalize(data).split("_")
   entries[0].push({ data, header: true })
   entries[1].push(Math.round(n) + unit)
   return entries
@@ -40,7 +40,7 @@ export const detailsFrom = tests =>
       : icons[status]
 
     return body + render(name, detailsFrom(subtests), icon, status, open)
-  }, "")
+  }, blank)
 
 export function coverageFrom(events) {
   const { files, totals } = events.find(e => e.type === "coverage") ?? {}
@@ -88,7 +88,7 @@ export function coverageFrom(events) {
     coveredLinePercent.toFixed(2),
     coveredBranchPercent.toFixed(2),
     coveredFunctionPercent.toFixed(2),
-    "",
+    blank,
   ])
   return coverage
 }

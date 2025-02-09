@@ -1,8 +1,8 @@
 import { Readable } from "node:stream"
 import core from "@actions/core"
 
-import { assert, describe,  it, beforeEach, afterEach, mock  } from "utils/test"
-import { relative, read, write, capitalize, arrayFrom, toDOM } from "utils"
+import { assert, describe, it, beforeEach, afterEach, mock } from "utils/test"
+import { relative, read, write, capitalize, blank, arrayFrom, toDOM } from "utils"
 
 import { toTable, detailsFrom, coverageFrom, annotate, render, preview } from "#lib"
 import { reporter } from "#index"
@@ -47,7 +47,7 @@ describe("`annotate`", () => {
   const events = Object
     .entries(results)
     .map(([name, type], i) => {
-      if (type === "fail") var error = { cause: "" }
+      if (type === "fail") var error = { cause: blank }
       return {
         type, name, file, line: i + 1,
         skip: name === "skip",

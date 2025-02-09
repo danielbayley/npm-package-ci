@@ -12,7 +12,6 @@ export function render(summary, content, icon, status, open = "") {
   icon = `<img title="${status}" src="${src}/${icon}.svg"/>`
   summary = `${icon}&ensp;${summary}`
 
-
   const body = content
     ? `<details${open}>
         <summary>${summary}</summary>

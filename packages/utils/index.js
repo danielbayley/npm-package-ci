@@ -3,8 +3,8 @@ import path, { dirname, resolve }     from "node:path"
 import { JSDOM } from "jsdom"
 
 export const { encoding } = new TextDecoder()
-const blank = ""
-const space = " "
+export const blank = ""
+export const space = " "
 
 export const relative = (from, to) => path.relative(from, resolve(from, to))
 
