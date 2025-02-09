@@ -38,7 +38,8 @@ engines:
 packageManager: pnpm@10.2.1
 
 devDependencies:
-  yaml: catalog:default
+  publint: &catalog catalog:default
+  yaml:    *catalog
 
 config: *directories
 scripts:

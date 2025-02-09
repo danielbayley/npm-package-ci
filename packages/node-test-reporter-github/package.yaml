@@ -48,8 +48,9 @@ dependencies:
   "@danielbayley/node-test-parser": workspace:^
 
 devDependencies:
-  jsdom: &catalog catalog:default
-  yaml:  *catalog
+  jsdom:   &catalog catalog:default
+  publint: *catalog
+  yaml:    *catalog
 
 scripts:
   prepare: yaml --single --json --indent ${TABSIZE:-2} < package.yaml > package.json

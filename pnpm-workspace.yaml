@@ -5,4 +5,5 @@ packages:
 # https://pnpm.io/catalogs
 catalog:
   jsdom: ^26.0.0
+  publint: ^0.3.4
   yaml: ^2.7.0
