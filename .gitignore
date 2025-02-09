@@ -1,4 +1,5 @@
 node_modules/
-*.json
-build/
+/package.json
+packages/**/*.json
+fixtures/*.json
 *.html

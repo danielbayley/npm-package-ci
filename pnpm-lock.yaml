@@ -67,7 +67,7 @@ importers:
       jsdom:
         specifier: catalog:default
         version: 26.0.0
-    devDependencies:
+    optionalDependencies:
       yaml:
         specifier: catalog:default
         version: 2.7.0

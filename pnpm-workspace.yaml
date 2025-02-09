@@ -1,6 +1,7 @@
 # https://pnpm.io/pnpm-workspace_yaml
 packages:
 - packages/*
+- package-metadata/*
 
 # https://pnpm.io/catalogs
 catalog:

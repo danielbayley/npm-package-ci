@@ -1,0 +1,121 @@
+# https://docs.github.com/actions/using-workflows/workflow-syntax-for-github-actions
+name: Package Metadata
+description: Analyse package.* metadata for later workflow usage.
+author: Daniel Bayley
+
+inputs:
+  working-directory:
+    description: Specify an alternative directory to analyse.
+
+  package-file:
+    description: Force a specific package.* file to be read.
+
+outputs:
+  package-file:
+    description: Detected package.* file.
+
+  package-manager:
+    description: Detected package manager.
+
+  package-manager-version:
+    description: Detected package manager version.
+
+  node-version:
+    description: Node.js version, or SemVer range.
+
+  metadata:
+    description: package.* metadata as JSON.
+
+  version:
+    description: Current package version.
+
+  name:
+    description: Package name.
+
+  description:
+    description: Package description.
+
+  keywords:
+    description: Package keywords array.
+
+  homepage:
+    description: Project homepage URL.
+
+  repository:
+    description: Repository URL.
+
+  bugs:
+    description: Issue tracker URL.
+
+  author:
+    description: Author name, email, and blog URL as JSON.
+  author-name:
+    description: Author name.
+  author-email:
+    description: Author email.
+  email:
+    description: Author email.
+  blog:
+    description: Blog URL.
+
+  license:
+    description: SPDX license identifier.
+
+  type:
+    description: ESM or CommonJS.
+
+  imports:
+    description: Subpath import specifiers as JSON.
+
+  exports:
+    description: Package entry points as JSON.
+
+  main:
+    description: Primary package entry point.
+
+  bin:
+    description: CLI executable configuration as JSON.
+
+  man:
+    description: Documentation manual page, or array of pages.
+
+  files:
+    description: Array of file glob patterns to include on publish, as JSON.
+
+  directories:
+    description: Project folder structure as JSON.
+
+  publish-config:
+    description: Publish config overrides.
+  publishConfig:
+    description: Publish config overrides.
+
+  packageManager:
+    description: Detected package manager.
+
+  dependencies:
+    description: Dependencies as JSON.
+
+  optionalDependencies:
+    description: Optional dependencies as JSON.
+  optional-dependencies:
+    description: Optional dependencies as JSON.
+
+  peerDependencies:
+    description: Peer dependencies as JSON.
+
+  peerDependenciesMeta:
+    description: Peer dependencies metadata as JSON.
+
+  devDependencies:
+    description: Development only dependencies as JSON.
+
+  config:
+    description: Extra configuration as JSON.
+
+  scripts:
+    description: Lifecycle scripts as JSON.
+
+runs:
+  using: node20
+  main: index.js

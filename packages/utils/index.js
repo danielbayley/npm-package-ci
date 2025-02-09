@@ -1,19 +1,24 @@
-import { mkdir, readFile, writeFile } from "node:fs/promises"
-import path, { dirname, resolve }     from "node:path"
+import fs from "node:fs/promises"
+import path, { dirname, resolve } from "node:path"
 import { JSDOM } from "jsdom"
 
-export const { encoding } = new TextDecoder()
 export const blank = ""
 export const space = " "
 
 export const relative = (from, to) => path.relative(from, resolve(from, to))
 
-export const read = file => readFile(file, { encoding })
+export const read = file => fs.readFile(file, new TextDecoder)
+
+export async function load(file) {
+  const content = await read(file)
+  const {parse} = file.endsWith(".yaml") ? await import("yaml") : JSON
+  return parse(content)
+}
 
 export async function write(path, content = blank) {
   const parent = dirname(path)
-  await mkdir(parent, { recursive: true })
-  await writeFile(path, content)
+  await fs.mkdir(parent, { recursive: true })
+  await fs.writeFile(path, content)
   return path
 }
 

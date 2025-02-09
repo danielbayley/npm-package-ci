@@ -1,16 +1,15 @@
-import { readdir } from "node:fs/promises"
-import { read } from "utils"
+import fs   from "node:fs/promises"
+import path from "node:path"
+import { load } from "utils"
 
-let { INPUT_REPORTER: reporter } = process.env
+let { INPUT_REPORTER: reporter, GITHUB_WORKSPACE } = process.env
 const { dirname } = import.meta
-const { dependencies } = await read(`${dirname}/package.json`)
-  .then(JSON.parse)
+const { dependencies } = await load(`${dirname}/package.json`)
   .catch(console.error)
 
-const [name] = Object.keys(dependencies)
-const packageJSON = "package.json"
+const [dependency] = Object.keys(dependencies)
 const files = {
-  [packageJSON]:      undefined,
+  "package.json":          null,
   "package.yaml":        "pnpm",
   "pnpm-lock.yaml":      "pnpm",
   "shrinkwrap.yaml":     "pnpm",
@@ -18,18 +17,28 @@ const files = {
   "package-lock.json":    "npm",
   "npm-shrinkwrap.json":  "npm",
 }
-const ls = await readdir(".")
-const path = ls.find(path => files[path])
-const json = await read(packageJSON).catch(() => "{}")
-const { packageManager, devEngines, engines } = JSON.parse(json)
+const ls = await fs.readdir(GITHUB_WORKSPACE)
+const order = Object.keys(files)
+const by = (a, b) => order.indexOf(a) - order.indexOf(b)
+const sorted = ls.filter(path => path in files).sort(by)
+const match  = sorted.find(path => files[path])
+const pkg    = path.join(GITHUB_WORKSPACE, order.slice(0, 2)
+  .find(path => sorted.includes(path)))
 
-let [pm] = packageManager?.split("@") ?? Object
-  .values(files)
-  .filter(pm => engines?.[pm])
+console.log(`package-file=${pkg}`)
 
-pm ??= devEngines?.packageManager?.name
-pm ??= files[path] ?? "npm"
+const { packageManager, devEngines, engines } = await load(pkg)
+  .catch(Object.create)
+
+let { name, version } = devEngines?.packageManager ?? {}
+let [pm, v] = packageManager?.split("@") ?? []
+
+pm ??= Object.values(files).find(pm => engines?.[pm])
+pm ??= name ?? files[match] ?? "npm"
+version ??= v ?? "latest"
+
 console.log(`package-manager=${pm}`)
+console.log(`version=${version}`)
 
 const install = {
   pnpm: "pnpm install",
@@ -42,7 +51,7 @@ const test = pm === "yarn" ? "yarn test" : `${pm} run --if-present test`
 console.log(`test=${test}`)
 
 if (reporter !== "false") {
-  reporter ||= `${dirname}/packages/${name}/index.js`
+  reporter ||= `${dirname}/packages/${dependency}/index.js`
   const add = {
     pnpm: `pnpm add ${reporter}`,
     yarn: `yarn add ${reporter}`,
