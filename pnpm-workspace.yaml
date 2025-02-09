@@ -4,6 +4,5 @@ packages:
 
 # https://pnpm.io/catalogs
 catalog:
-  "@danielx/civet": ^0.9.6
   jsdom: ^26.0.0
   yaml: ^2.7.0

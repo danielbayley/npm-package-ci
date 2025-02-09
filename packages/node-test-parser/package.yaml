@@ -38,8 +38,7 @@ engines:
 packageManager: pnpm@10.2.1
 
 devDependencies:
-  "@danielx/civet": &catalog catalog:default
-  yaml: *catalog
+  yaml: catalog:default
 
 config: *directories
 scripts:
