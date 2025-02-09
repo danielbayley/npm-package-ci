@@ -1,0 +1,37 @@
+# https://docs.npmjs.com/cli/configuring-npm/package-json
+name: utils
+keywords:
+- library
+- utils
+- testing
+
+private: true
+type: module
+imports:
+  "#index": ./index.mjs
+  "#test": &test ./test.js
+exports:
+  .: ./index.mjs
+  ./test: *test
+  ./scripts/*: ./scripts/*.mjs
+
+engines:
+  node: ">=20"
+  pnpm: ">=10"
+devEngines:
+  packageManager:
+    name: pnpm
+    version: ">=10"
+  runtime:
+    name: node
+    version: ">=22.13"
+packageManager: pnpm@10.4.1
+dependencies:
+  jsdom: catalog:default
+
+scripts:
+  prepare: node scripts/prepare.mjs
+  test: node --experimental-test-coverage --test test/unit.js
+  watch: pnpm test --watch
+  reinstall: pnpm zap && pnpm install
+  zap: rm -rf node_modules/

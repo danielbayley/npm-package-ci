@@ -1,6 +1,6 @@
 # https://docs.npmjs.com/cli/configuring-npm/package-json
-$schema: https://json.schemastore.org/package
-name: &name npm-package-ci
+#$schema: https://json.schemastore.org/package
+name: npm-package-ci #&name
 description: Simple CI for your npm packages.
 keywords:
 - ci
@@ -23,25 +23,44 @@ funding: https://github.com/sponsors/danielbayley
 
 private: true
 type: module
+imports:
+  "#metadata": ./metadata/index.mjs
 exports: ./index.js
 
 engines:
   node: ">=20"
   pnpm: ">=10"
-packageManager: pnpm@10.2.1
+packageManager: pnpm@10.4.1
 pnpm:
   requiredScripts: [prepare, test]
+  # TODO https://pnpm.io/config-dependencies#loading-an-allow-list-of-built-dependencies
+  #onlyBuiltDependencies: #File: node_modules/@danielbayley/TODO.json
+  #- *name
+  #- jsdom
+  #- "@danielbayley/node-test-parser"
+  #- node-test-reporter-github
+  #- utils
 
 dependencies:
   node-test-reporter-github: workspace:^
   utils: workspace:^
 
 devDependencies:
-  jsdom: &catalog catalog:default
-  yaml:  *catalog
+  jsdom: catalog:default
+  utils: workspace:^
 
 scripts:
+  #pretest: node --test test/unit.js TODO
   test: pnpm --stream --reporter-hide-prefix --recursive test
   prepare: pnpm --recursive prepare
   pnpm:devPreinstall: yq --output-format json package.yaml > package.json
-  postinstall: node index.js >> $GITHUB_OUTPUT
+  postinstall: node index.js
+
+  reinstall: pnpm zap && pnpm install
+  clean: rm -f {*,.}/package.json **/fixtures/*.json || true #*/build #pnpm --recursive clean
+  zap: pnpm clean && rm -rf **/node_modules || true  #pnpm --recursive zap
+
+
+# TODO promote
+# https://x.com/search?q=from%3Amattpocockuk%20corepack&src=typed_query
+# https://github.com/actions/setup-node/issues/1222#issuecomment-2649754743

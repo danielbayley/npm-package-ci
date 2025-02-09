@@ -28,11 +28,9 @@ export async function* reporter(report) {
     .addHeading("Coverage", h + 1)
     .addTable(coverage)
 
-  if (GITHUB_ACTIONS == null) {
-    const body = core.summary.stringify()
-    const html = preview(body)
-    core.summary.emptyBuffer()
-    core.summary.addRaw(html)
-  }
+  const body = core.summary.stringify()
+  const html = GITHUB_ACTIONS ? body : preview(body)
+  core.summary.emptyBuffer()
+  core.summary.addRaw(html.replace(/<th>/g, '<th align="left">'))
   core.summary.write({ overwrite: true })
 }

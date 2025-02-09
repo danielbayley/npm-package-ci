@@ -1,9 +1,8 @@
-const { dirname } = import.meta
-const [owner, repo, branch,, name] = dirname.split("/").slice(-6, -1)
+const [owner, repo, branch, name] = import.meta.dirname.split("/").slice(-5, -1)
 
 const path = process.env.GITHUB_ACTIONS
-  ? `https://github.com/${owner}/${repo}/raw/${branch}/packages/${name}`
-  : dirname
+  ? `https://github.com/${owner}/${repo}/raw/${branch}/${name}`
+  : "../.."
 
 // https://primer.style/foundations/icons
 const src = `${path}/octicons`

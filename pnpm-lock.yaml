@@ -12,9 +12,6 @@ catalogs:
     publint:
       specifier: ^0.3.4
       version: 0.3.4
-    yaml:
-      specifier: ^2.7.0
-      version: 2.7.0
 
 importers:
 
@@ -22,28 +19,31 @@ importers:
     dependencies:
       node-test-reporter-github:
         specifier: workspace:^
-        version: link:packages/node-test-reporter-github
+        version: link:node-test-reporter-github
       utils:
         specifier: workspace:^
-        version: link:packages/utils
+        version: link:utils
     devDependencies:
       jsdom:
         specifier: catalog:default
         version: 26.0.0
-      yaml:
-        specifier: catalog:default
-        version: 2.7.0
 
-  packages/node-test-parser:
+  metadata:
+    devDependencies:
+      utils:
+        specifier: workspace:^
+        version: link:../utils
+
+  node-test-parser:
     devDependencies:
       publint:
         specifier: catalog:default
         version: 0.3.4
-      yaml:
-        specifier: catalog:default
-        version: 2.7.0
+      utils:
+        specifier: workspace:^
+        version: link:../utils
 
-  packages/node-test-reporter-github:
+  node-test-reporter-github:
     dependencies:
       '@actions/core':
         specifier: ^1.10.1
@@ -58,19 +58,15 @@ importers:
       publint:
         specifier: catalog:default
         version: 0.3.4
-      yaml:
-        specifier: catalog:default
-        version: 2.7.0
+      utils:
+        specifier: workspace:^
+        version: link:../utils
 
-  packages/utils:
+  utils:
     dependencies:
       jsdom:
         specifier: catalog:default
         version: 26.0.0
-    devDependencies:
-      yaml:
-        specifier: catalog:default
-        version: 2.7.0
 
 packages:
 
@@ -314,11 +310,6 @@ packages:
   xmlchars@2.2.0:
     resolution: {integrity: sha512-JZnDKK8B0RCDw84FNdDAIpZK+JuJw+s7Lz8nksI7SIuU3UXJJslUthsi+uWBUYOwPFwW7W7PRLRfUKpxjtjFCw==}
 
-  yaml@2.7.0:
-    resolution: {integrity: sha512-+hSoy/QHluxmC9kCIJyL/uyFmLmc+e5CFR5Wa+bpIhIj85LVb9ZH2nVnqrHoSvKogwODv0ClqZkmiSSaIH5LTA==}
-    engines: {node: '>= 14'}
-    hasBin: true
-
 snapshots:
 
   '@actions/core@1.11.1':
@@ -542,5 +533,3 @@ snapshots:
   xml-name-validator@5.0.0: {}
 
   xmlchars@2.2.0: {}
-
-  yaml@2.7.0: {}

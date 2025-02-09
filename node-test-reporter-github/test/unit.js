@@ -1,8 +1,10 @@
+import fs from "node:fs/promises"
 import { Readable } from "node:stream"
 import core from "@actions/core"
+import { JSDOM } from "jsdom"
 
 import { assert, describe, it, beforeEach, afterEach, mock } from "utils/test"
-import { relative, read, write, capitalize, blank, arrayFrom, toDOM } from "utils"
+import { relative, writeFile, capitalize, blank, arrayFrom } from "utils"
 
 import { toTable, detailsFrom, coverageFrom, annotate, render, preview } from "#lib"
 import { reporter } from "#index"
@@ -11,6 +13,8 @@ const { dirname, filename } = import.meta
 const { GITHUB_ACTIONS, GITHUB_WORKSPACE = `${dirname}/../../..`} = process.env
 const file = relative(GITHUB_WORKSPACE, filename)
 const fixtures = `${dirname}/fixtures`
+
+export const toDOM = html => new JSDOM(html).window.document
 
 const [
   coveredLinePercent,
@@ -25,6 +29,16 @@ const totals  = {
 }
 
 const selector = "details summary + blockquote"
+
+describe("`toDOM`", () => {
+  const content = "content"
+  const html = `<div id="id">${content}</div>`
+  const document = toDOM(html)
+  const {textContent} = document.querySelector("div#id")
+
+  it("should parse HTML string to DOM", () =>
+    assert.equal(textContent, content))
+})
 
 describe("`toTable`", () =>
   it("should return entries compatible with `core.summary.addTable`", () => {
@@ -289,7 +303,7 @@ describe("`reporter`", async () => {
   const stream = Readable.from(report)
 
   const preview = `${fixtures}/index.html`
-  await write(preview)
+  await writeFile(preview)
   process.env.GITHUB_STEP_SUMMARY = preview
 
   mock.method(core.summary, "addHeading")
@@ -298,7 +312,7 @@ describe("`reporter`", async () => {
   mock.method(core.summary, "write")
 
   await arrayFrom(reporter(stream))
-  const html = await read(preview)
+  const html = await fs.readFile(preview, new TextDecoder)
   const document = toDOM(html)
 
   it("should create local HTML preview", () => {

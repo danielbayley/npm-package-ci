@@ -1,0 +1,143 @@
+# https://docs.github.com/actions/using-workflows/workflow-syntax-for-github-actions
+name: Package Metadata
+description: Analyse package.* metadata for later workflow usage.
+author: Daniel Bayley
+
+inputs:
+  working-directory:
+    description: Specify an alternative directory to analyse.
+
+  package-file:
+    description: Force a specific package.* file to be read.
+
+outputs:
+  package-file:
+    description: Detected package.* file path.
+
+  path:
+    description: Detected package.* file path object.
+
+  # https://docs.npmjs.com/cli/configuring-npm/package-json
+  package:
+    description: Complete package.* metadata.
+
+  # Resolved package.*, and overall project metadata.
+  version:
+    description: Current package version.
+
+  name:
+    description: Package name.
+
+  description:
+    description: Package description.
+
+  keywords:
+    description: Package keywords array.
+
+  homepage:
+    description: Project homepage URL.
+
+  repository:
+    description: Repository URL.
+
+  bugs:
+    description: Issue tracker URL.
+
+  author:
+    description: Author name, email, and blog URL as JSON.
+
+  license:
+    description: SPDX license identifier.
+
+  type:
+    description: ESM or CommonJS.
+
+  imports:
+    description: Subpath import specifiers as JSON.
+
+  exports:
+    description: Package entry points as JSON.
+
+  main:
+    description: Primary package entry point.
+
+  bin:
+    description: CLI executable configuration as JSON.
+
+  files:
+    description: Array of file glob patterns to include on publish, as JSON.
+
+  directories:
+    description: Project folder structure as JSON.
+
+  publishConfig:
+    description: Publish config overrides.
+
+  engines:
+    description: Compatible versions of Node.js and/or package manager.
+
+  devEngines:
+    description: Compatible development versions of Node.js and/or package manager.
+
+  packageManager:
+    description: Compatible package manager and version.
+
+  dependencies:
+    description: Dependencies as JSON.
+
+  optionalDependencies:
+    description: Optional dependencies as JSON.
+
+  peerDependencies:
+    description: Peer dependencies as JSON.
+
+  peerDependenciesMeta:
+    description: Peer dependencies metadata as JSON.
+
+  devDependencies:
+    description: Development only dependencies as JSON.
+
+  config:
+    description: Extra configuration as JSON.
+
+  scripts:
+    description: Lifecycle scripts as JSON.
+
+  # https://pnpm.io/pnpm-workspace_yaml
+  workspace:
+    description: pnpm workspace configuration.
+
+  # https://docs.npmjs.com/cli/v11/configuring-npm/package-json#workspaces
+  # https://yarnpkg.com/features/workspaces
+  workspaces:
+    description: npm or yarn workspaces configuration.
+
+  ls:
+    description: Array of paths in the working directory
+
+  versions:
+    description: Node.js runtime process.versions.
+
+  package-manager:
+    description: Detected package manager.
+
+  package-manager-version:
+    description: Detected package manager version.
+
+  node-version:
+    description: Compatible Node.js version, or SemVer range.
+
+  # https://github.com/actions/setup-node#usage
+  node-version-file:
+    description: File containing the compatible version of Node.js.
+
+  install-command:
+    description: Detected package manager corresponding 'install' command.
+
+  test-command:
+    description: Detected package manager corresponding 'test' command.
+
+runs:
+  using: node20
+  #pre-if: hashFiles('package.yaml') != ''
+  main: index.mjs

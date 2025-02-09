@@ -1,0 +1,31 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256">
+  <style>
+    :root {
+      color-scheme: light dark;
+      --light: #f0f6fc;
+      --dark:  #1f2328;
+      --green: #3fb950;
+      --time: 500ms;
+    }
+
+    circle {
+      fill: var(--green);
+      transform-origin: center;
+      animation: scale var(--time) ease-out;
+    } @keyframes scale { from { scale: 0 }}
+
+    path {
+      fill: none;
+      stroke: light-dark(var(--light), var(--dark));
+      stroke-width: 24;
+      stroke-linecap:  round;
+      stroke-linejoin: round;
+      stroke-dasharray:  100;
+      stroke-dashoffset: 100;
+      animation-delay: calc(var(--time) / 1.5);
+      animation: check var(--time) forwards ease-in-out;
+    } @keyframes check { to { stroke-dashoffset: 0 }}
+  </style>
+  <circle cx="50%" cy="50%" r="50%"/>
+  <path pathLength="100" d="m76 132 32 32 72-72"/>
+</svg>

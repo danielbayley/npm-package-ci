@@ -1,0 +1,19 @@
+{
+  "private": true,
+  "type": "module",
+  "imports": {
+    "#index": "./index.mjs"
+  },
+  "engines": {
+    "node": "^20.5.0",
+    "pnpm": ">=10"
+  },
+  "packageManager": "pnpm@10.4.1",
+  "devDependencies": {
+    "utils": "workspace:^"
+  },
+  "scripts": {
+    "prepare": "node --import utils/scripts/prepare",
+    "test": "node --experimental-test-coverage --test test/unit.js"
+  }
+}

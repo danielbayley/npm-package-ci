@@ -3,7 +3,7 @@ import { relative, blank, capitalize, rangesFrom } from "utils"
 import * as html from "#lib/html"
 
 const {
-  GITHUB_WORKSPACE = `${import.meta.dirname}/../../..`,
+  GITHUB_WORKSPACE = `${import.meta.dirname}/../..`,
   INPUT_TODO_ANNOTATE,
   INPUT_TODO_FAIL_WARN,
 } = process.env

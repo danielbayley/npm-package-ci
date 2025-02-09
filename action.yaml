@@ -1,7 +1,6 @@
 # https://docs.github.com/actions/using-workflows/workflow-syntax-for-github-actions
-$schema: https://json.schemastore.org/github-workflow
 name: npm Package CI
-description: Easy CI for your npm packages.
+description: Simple CI for your npm packages.
 author: Daniel Bayley
 branding:
   icon: package
@@ -24,40 +23,69 @@ inputs:
 outputs:
   package-manager:
     description: Detected package manager.
-    value: ${{ steps.node.outputs.package-manager }}
+    value: ${{ steps.metadata.outputs.package-manager }}
+
+  package-file:
+    description: Detected package.* file.
+    value: ${{ steps.metadata.outputs.package-file }}
 
   options:
     description: NODE_OPTIONS
-    value: ${{ steps.node.outputs.options }}
+    value: ${{ steps.metadata.outputs.options }}
 
   test:
     description: The scripts.test command.
-    value: ${{ steps.node.outputs.test }}
+    value: ${{ steps.metadata.outputs.test }}
 
 runs:
   using: composite
   steps:
+  - id: pre
+    uses: danielbayley/npm-package-ci/metadata@main
+    with:
+      working-directory: ${{ github.action_path }}
+
+  - uses: pnpm/action-setup@v4
+    with:
+      package_json_file: ${{ steps.pre.outputs.package-file  }}
+      version: ${{ steps.pre.outputs.package-manager-version }}
+      run_install: false
+
   - uses: actions/setup-node@v4
     with:
-      node-version: ${{ inputs.node-version }}
+      node-version: ${{ steps.pre.outputs.node-version }}
+      cache-dependency-path: ${{ github.action_path }}/pnpm-lock.yaml
 
-  - shell: sh
-    run: npm install --global --force corepack && corepack enable
-
-  - id: node
+  - id: metadata
     working-directory: ${{ github.action_path }}
     shell: sh
-    run: pnpm install
+    run: ${{ steps.pre.outputs.package-manager }} install
     env:
       INPUT_REPORTER: ${{ inputs.test-reporter }}
 
-  - if: inputs.test-reporter
+  # https://pnpm.io/installation
+  - if: steps.metadata.outputs.package-manager == 'pnpm'
+    uses: pnpm/action-setup@v4
+    with:
+      package_json_file: ${{ steps.metadata.outputs.package-file  }}
+      version: ${{ steps.metadata.outputs.package-manager-version }}
+      run_install: false
+
+  # https://yarnpkg.com/getting-started/install
+  - if: steps.metadata.outputs.package-manager == 'yarn' && inputs.node-version != 20
     shell: sh
-    run: ${{ steps.node.outputs.add }}
+    run: |
+      command -v corepack || npm install --global corepack
+      corepack enable
 
   - uses: actions/setup-node@v4
     with:
-      cache: ${{ steps.node.outputs.package-manager }}
+      node-version: ${{ inputs.node-version }}
+      cache: ${{ steps.metadata.outputs.package-manager }}
+
+  - if: inputs.test-reporter
+    shell: sh
+    run: ${{ steps.metadata.outputs.add }}
 
   - shell: sh
-    run: ${{ steps.node.outputs.install }}
+    run: ${{ steps.metadata.outputs.install }}

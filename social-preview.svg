@@ -1,0 +1,72 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1280 640">
+  <style>
+    :root {
+      color-scheme: light dark;
+      --light: #f0f6fc;
+      --dark:  #1f2328;
+      --green: #3fb950;
+      --red:   #e9524c;
+      --time: 500ms;
+    }
+    * {
+      transform-box: border-box;
+      transform-origin: center;
+    }
+
+    circle {
+      fill: var(--green);
+      scale: 0;
+      animation: scale var(--time) forwards ease-out;
+    } @keyframes scale { to { scale: 100% }}
+
+    circle:nth-of-type(2) { animation-delay: var(--time) }
+    circle:last-of-type {
+      fill: var(--red);
+      animation-delay: calc(var(--time) * 2);
+    }
+
+    path {
+      fill: none;
+      stroke: light-dark(var(--light), var(--dark));
+      stroke-width: 24;
+      stroke-linecap:  round;
+      stroke-linejoin: round;
+      stroke-dasharray:  100;
+      stroke-dashoffset: 100;
+      animation: check var(--time) forwards ease-in-out;
+      animation-delay: calc(var(--time) / 1.5);
+    } @keyframes check { to { stroke-dashoffset: 0 }}
+
+    path:nth-of-type(2) { animation-delay: calc(var(--time) * 2) }
+
+    path:nth-last-of-type(2) { rotate:  45deg }
+    path:last-of-type        { rotate: -45deg }
+    path:nth-last-of-type(-n+2) {
+      stroke-width: 0;
+      stroke-dasharray: 0 100;
+      stroke-dashoffset: 50;
+      animation: var(--time) forwards;
+      animation-timing-function: ease-out, ease-in;
+      animation-duration: var(--time), calc(var(--time) / 1.5);
+      animation-delay: calc(var(--time) * 2.5), calc(var(--time) * 3);
+      animation-name: draw, rotate;
+    }
+    @keyframes rotate { to { rotate: 0deg }}
+    @keyframes draw {
+      to, 1% { stroke-width: 24 }
+      to {
+        stroke-dasharray:  100 0;
+        stroke-dashoffset: 100;
+      }
+    }
+  </style>
+  <circle cx="25%" cy="50%" r="128"/>
+  <path pathLength="100" d="m268 324 32 32 72-72"/>
+
+  <circle cx="50%" cy="50%" r="128"/>
+  <path pathLength="100" d="m588 324 32 32 72-72"/>
+
+  <circle cx="75%" cy="50%" r="128"/>
+  <path pathLength="100" d="m920 360 80-80"/>
+  <path pathLength="100" d="m920 280 80 80"/>
+</svg>

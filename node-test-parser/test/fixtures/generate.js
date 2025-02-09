@@ -1,4 +1,4 @@
-import { arrayFrom } from "utils"
+import {arrayFrom} from "utils"
 
 export default async function* generate(report) {
   const events = await arrayFrom(report).catch(() => ({}))

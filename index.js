@@ -1,55 +1,33 @@
-import { readdir } from "node:fs/promises"
-import { read } from "utils"
+import fs from "node:fs/promises"
+import * as metadata from "#metadata"
+import { toINI, newline } from "utils"
 
-let { INPUT_REPORTER: reporter } = process.env
-const { dirname } = import.meta
-const { dependencies } = await read(`${dirname}/package.json`)
-  .then(JSON.parse)
-  .catch(console.error)
+const { INPUT_REPORTER, GITHUB_OUTPUT } = process.env
+const { packageManager,  dependencies } = metadata.package
+const [pm] = packageManager.split("@")
+let [dependency] = Object.keys(dependencies ?? {}) ?? []
+dependency ??= "node-test-reporter-github"
 
-const [name] = Object.keys(dependencies)
-const packageJSON = "package.json"
-const files = {
-  [packageJSON]:      undefined,
-  "package.yaml":        "pnpm",
-  "pnpm-lock.yaml":      "pnpm",
-  "shrinkwrap.yaml":     "pnpm",
-  "yarn.lock":           "yarn",
-  "package-lock.json":    "npm",
-  "npm-shrinkwrap.json":  "npm",
-}
-const ls = await readdir(".")
-const path = ls.find(path => files[path])
-const json = await read(packageJSON).catch(() => "{}")
-const { packageManager, devEngines, engines } = JSON.parse(json)
-
-let [pm] = packageManager?.split("@") ?? Object
-  .values(files)
-  .filter(pm => engines?.[pm])
-
-pm ??= devEngines?.packageManager?.name
-pm ??= files[path] ?? "npm"
-console.log(`package-manager=${pm}`)
-
+let {ini} = metadata
 const install = {
   pnpm: "pnpm install",
   yarn: "yarn install --immutable",
   npm:  "npm ci",
-}
-console.log(`install=${install[pm]}`)
+}[pm]
 
 const test = pm === "yarn" ? "yarn test" : `${pm} run --if-present test`
-console.log(`test=${test}`)
 
+let add, options, reporter = INPUT_REPORTER
 if (reporter !== "false") {
-  reporter ||= `${dirname}/packages/${name}/index.js`
-  const add = {
+  reporter ||= `${import.meta.dirname}/${dependency}/index.js`
+  add = {
     pnpm: `pnpm add ${reporter}`,
     yarn: `yarn add ${reporter}`,
     npm:  `npm  add ${reporter} --no-save`,
-  }
-  console.log(`add=${add[pm]}`)
+  }[pm]
 
-  const options = `--test-reporter=${reporter} --test-reporter-destination=$GITHUB_STEP_SUMMARY`
-  console.log(`options=${options}`)
+  options = `--test-reporter=${reporter} --test-reporter-destination=$GITHUB_STEP_SUMMARY`
 }
+
+ini += newline + toINI({ install, test, add, options })
+if (GITHUB_OUTPUT) await fs.appendFile(GITHUB_OUTPUT, ini)

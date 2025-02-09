@@ -1,5 +1,4 @@
 # https://docs.npmjs.com/cli/configuring-npm/package-json
-$schema: https://json.schemastore.org/package
 version: 0.0.0
 name: node-test-reporter-github
 description: Informative node --test reporter for GitHub Actions.
@@ -10,9 +9,9 @@ keywords:
 - actions
 - reporter
 
-homepage: https://github.com/danielbayley/npm-package-ci/tree/main/packages/node-test-reporter-github#readme
+homepage: https://github.com/danielbayley/npm-package-ci/tree/main/node-test-reporter-github#readme
 repository: danielbayley/npm-package-ci
-bugs: https://github.com/danielbayley/npm-package-ci/tree/main/packages/node-test-reporter-github/issues
+bugs: https://github.com/danielbayley/npm-package-ci/tree/main/node-test-reporter-github/issues
 
 author:
   name: Daniel Bayley
@@ -22,7 +21,6 @@ author:
 license: MIT
 funding: https://github.com/sponsors/danielbayley
 
-private: true
 type: module
 imports:
   "#index": &index ./index.js
@@ -30,7 +28,6 @@ imports:
   "#lib/*": ./lib/*.js
 exports: *index
 directories:
-  build: &build build
   lib: &lib lib
   icons: &icons octicons
 files:
@@ -41,8 +38,7 @@ files:
 engines:
   node: ">=20"
   pnpm: ">=10"
-packageManager: pnpm@10.2.1
-
+packageManager: pnpm@10.4.1
 dependencies:
   "@actions/core": ^1.10.1
   "@danielbayley/node-test-parser": workspace:^
@@ -50,25 +46,25 @@ dependencies:
 devDependencies:
   jsdom:   &catalog catalog:default
   publint: *catalog
-  yaml:    *catalog
+  utils: workspace:^
 
 scripts:
-  prepare: yaml --single --json --indent ${TABSIZE:-2} < package.yaml > package.json
-  pretest: pnpm prepare
+  prepare: node --import utils/scripts/prepare
+
   test: node --experimental-test-coverage --test test/unit.js
 
-  prepublishOnly: |
-    mkdir -p build
-    mv package.json build
-    cp index.js lib octicons build
+  prepublishOnly: publint
 
   version: |
     sed -i "" -E "s/^(version: *)$npm_old_version\$/\\1$npm_new_version/" package.yaml
-    git commit --all --message $npm_package_version
+    git commit --message $npm_new_version package.yaml
   postversion: |
-    git tag --annotate v$npm_package_version -m ""
+    git tag  --annotate $npm_package_version --message v$npm_package_version
     git push --follow-tags
 
-  prerelease: git stash --all --include-untracked --keep-index --quiet
-  release: pnpm test && pnpm version
-  postrelease: pnpm publish && git stash pop --index --quiet
+  release: pnpm version --force --no-git-tag-version
+  postrelease: pnpm publish
+
+  watch: pnpm test --watch
+  reinstall: pnpm zap && pnpm install
+  zap: rm -rf node_modules/
