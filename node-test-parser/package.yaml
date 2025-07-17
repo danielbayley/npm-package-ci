@@ -32,17 +32,6 @@ directories: &directories
   fixtures: ./test/fixtures
 publishConfig:
   access: public
-engines:
-  node: ">=20"
-  pnpm: ">=10"
-devEngines:
-  packageManager:
-    name: pnpm
-    version: ">=10"
-  runtime:
-    name: node
-    version: ">=22.13"
-packageManager: pnpm@10.13.1
 
 devDependencies:
   publint: catalog:default

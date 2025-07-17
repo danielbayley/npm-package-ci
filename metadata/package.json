@@ -4,11 +4,6 @@
   "imports": {
     "#index": "./index.mjs"
   },
-  "engines": {
-    "node": "^20.5.0",
-    "pnpm": ">=10"
-  },
-  "packageManager": "pnpm@10.13.1",
   "devDependencies": {
     "utils": "workspace:^"
   },

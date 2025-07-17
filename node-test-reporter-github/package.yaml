@@ -35,10 +35,6 @@ files:
 - *lib
 - *icons
 
-engines:
-  node: ">=20"
-  pnpm: ">=10"
-packageManager: pnpm@10.13.1
 dependencies:
   "@actions/core": ^1.10.1
   "@danielbayley/node-test-parser": workspace:^
