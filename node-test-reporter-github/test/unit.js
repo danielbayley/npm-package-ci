@@ -34,7 +34,7 @@ describe("`toDOM`", () => {
   const content = "content"
   const html = `<div id="id">${content}</div>`
   const document = toDOM(html)
-  const {textContent} = document.querySelector("div#id")
+  const {textContent} = document.querySelector("div#id") ?? {}
 
   it("should parse HTML string to DOM", () =>
     assert.equal(textContent, content))
@@ -188,7 +188,7 @@ describe("`render`", () => {
     const summary = "pass"
     const suite = render(summary)
     const document = toDOM(suite)
-    const {textContent} = document.querySelector("*:first-child")
+    const {textContent} = document.querySelector("*:first-child") ?? {}
     assert.equal(textContent.trim(), summary)
   })
 
@@ -197,7 +197,7 @@ describe("`render`", () => {
     const content = `<div>${status}</div>`
     const body = render(null, content)
     const document = toDOM(body)
-    const { innerHTML, textContent } = document.querySelector(selector)
+    const { innerHTML, textContent } = document.querySelector(selector) ?? {}
     assert.equal(innerHTML.trim(), content)
     assert.equal(textContent.trim(), status)
   })
@@ -220,12 +220,12 @@ describe("`preview`", async () => {
   const document = toDOM(html)
 
   it("should wrap `body` in `html` for local preview", () => {
-    const {textContent} = document.querySelector(`html body ${selector} > *:first-child`)
+    const {textContent} = document.querySelector(`html body ${selector} > *:first-child`) ?? {}
     assert.equal(textContent, summary)
   })
 
   it("should apply GitHub CSS", () => {
-    const {href} = document.querySelector("head link")
+    const {href} = document.querySelector("head link") ?? {}
     assert.match(href, /github.*\.css$/)
     assert.equal(document.body.className, "markdown-body")
   })
@@ -316,7 +316,7 @@ describe("`reporter`", async () => {
   const document = toDOM(html)
 
   it("should create local HTML preview", () => {
-    const {tagName} = document.querySelector("html body > *:first-child")
+    const {tagName} = document.querySelector("html body > *:first-child") ?? {}
     assert.equal(core.summary.write.mock.callCount() > 0, true)
     assert.equal(html.length > 0, true)
     assert.match(tagName, /^h[1-6]$/i)
@@ -337,9 +337,9 @@ describe("`reporter`", async () => {
 
   let level
   it("should render test results `table`", () => {
-    const [{ arguments: [heading] }] = core.summary.addHeading.mock.calls
+    const [{ arguments: [heading] }] = core.summary.addHeading.mock.calls
     const [{ arguments: [rows]    }] = core.summary.addTable.mock.calls
-    const  { tagName, textContent }  = document.querySelector("h1, h2, h3")
+    const  { tagName, textContent }  = document.querySelector("h1, h2, h3") ?? {}
     const hn = tagName.toLowerCase()
     const table = document.querySelectorAll(`${hn} + table th`)
     level = parseInt(hn.charAt(1))
@@ -360,9 +360,9 @@ describe("`reporter`", async () => {
   })
 
   it("should render collapsible `details` section", () => {
-    const { arguments: [heading] } = core.summary.addHeading.mock.calls.at(1)
-    const { textContent } = document.querySelector(`h${level + 1}`)
-    const { open }        = document.querySelector("details")
+    const { arguments: [heading] } = core.summary.addHeading.mock.calls.at(1)
+    const { textContent } = document.querySelector(`h${level + 1}`) ?? {}
+    const { open }        = document.querySelector("details") ?? {}
     const elements        = document.querySelectorAll(`${selector} > *:nth-child(odd)`)
     const contents        = [...elements].map(e => e.textContent.trim())
 
@@ -374,7 +374,7 @@ describe("`reporter`", async () => {
   it("should render coverage `table`", () => {
     const { arguments: [heading] } = core.summary.addHeading.mock.calls.at(-1)
     const { arguments: [rows]    } = core.summary.addTable.mock.calls.at(-1)
-    const { textContent } = document.querySelector(`h${level + 1}:last-of-type`)
+    const { textContent } = document.querySelector(`h${level + 1}:last-of-type`) ?? {}
 
     const table = document.querySelectorAll("table:last-of-type td")
     const [{ textContent: td }] = [...table]
