@@ -329,7 +329,7 @@ describe("`reporter`", async () => {
     const { mock: method } = core.summary.addHeading
     assert.equal(method.callCount(), 3)
     method.calls.forEach(({ arguments: [,level] }, i) => {
-      const {tagName} = document.querySelector(`h${level}`)
+      const {tagName} = document.querySelector(`h${level}`) ?? {}
       assert.equal(tagName, `H${level}`)
       assert.equal(~~!!i + 2, level)
     })
@@ -377,7 +377,7 @@ describe("`reporter`", async () => {
     const { textContent } = document.querySelector(`h${level + 1}:last-of-type`) ?? {}
 
     const table = document.querySelectorAll("table:last-of-type td")
-    const [{ textContent: td }] = [...table]
+    const [{ textContent: td } = {}] = [...table]
     const row = rows.at(1)
 
     assert.equal(heading, textContent, "Coverage")
