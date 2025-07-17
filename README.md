@@ -56,7 +56,7 @@ jobs:
   CI:
     uses: danielbayley/npm-package-ci/.github/workflows/ci.yaml@v1
     #with:
-      #node-version: 21, 22
+      #node-version: 20, 21, "lts/*", 23, "latest"
 ~~~
 
 > [!NOTE]
