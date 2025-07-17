@@ -60,7 +60,7 @@ jobs:
 ~~~
 
 > [!NOTE]
-> Optionally specify `with.node-version`, or version*s* in [CSV] format.  
+> Optionally specify `with.`[`node-version`], or version*s* in [CSV] format.  
 > [_Node_.js] versions [`20`]–[`latest`] will be `test`ed against by default.
 
 > [!WARNING]
@@ -91,4 +91,5 @@ License
 [action]:             https://github.com/features/actions
 [reusable workflow]:  https://docs.github.com/actions/using-workflows/reusing-workflows
 
+[`node-version`]:     https://github.com/actions/setup-node#supported-version-syntax
 [csv]:                https://wikipedia.org/wiki/Comma-separated_values
