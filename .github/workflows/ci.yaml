@@ -30,7 +30,7 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        node-version: ${{ fromJson(format('[{0}]', inputs.node-version || '20, 21, 22, 23')) }}
+        node-version: ${{ fromJson(format('[{0}]', inputs.node-version || '20, 21, 22, 23, 24')) }}
 
     env: # https://nodejs.org/api/test.html#test-reporters
       NODE_OPTIONS: --test-reporter=spec --test-reporter-destination=stdout
