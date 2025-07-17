@@ -30,7 +30,7 @@ exports: ./index.js
 engines:
   node: ">=20"
   pnpm: ">=10"
-packageManager: pnpm@10.4.1
+packageManager: pnpm@10.13.1
 pnpm:
   requiredScripts: [prepare, test]
   # TODO https://pnpm.io/config-dependencies#loading-an-allow-list-of-built-dependencies
