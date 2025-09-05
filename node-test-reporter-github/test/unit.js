@@ -340,7 +340,7 @@ describe("`reporter`", async () => {
     const [{ arguments: [heading] }] = core.summary.addHeading.mock.calls
     const [{ arguments: [rows]    }] = core.summary.addTable.mock.calls
     const  { tagName, textContent }  = document.querySelector("h1, h2, h3") ?? {}
-    const hn = tagName.toLowerCase()
+    const hn = tagName?.toLowerCase()
     const table = document.querySelectorAll(`${hn} + table th`)
     level = parseInt(hn.charAt(1))
 
