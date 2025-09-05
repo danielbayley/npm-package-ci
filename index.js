@@ -3,9 +3,13 @@ import * as metadata from "#metadata"
 import { toINI, newline } from "utils"
 
 const { INPUT_REPORTER, GITHUB_OUTPUT } = process.env
-const { packageManager, dependencies, scripts } = metadata.package
-const [pm] = packageManager.split("@")
-let [dependency] = Object.keys(dependencies ?? {}) ?? []
+const { devEngines, packageManager, dependencies, scripts } = metadata.package
+
+let [pm] = packageManager?.split("@") ?? []
+pm ??= [devEngines?.packageManager].flat()
+  .find(({name}) => ["npm", "pnpm", "yarn"].includes(name))?.name
+
+const [dependency] = Object.keys(dependencies ?? {}) ?? []
 dependency ??= "node-test-reporter-github"
 
 let {ini} = metadata
