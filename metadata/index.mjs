@@ -32,9 +32,11 @@ export { pkg as package }
 
 const { packageManager, devEngines, engines } = pkg
 let { name, version: pmv } = devEngines?.packageManager ?? {}
-let [pm, v] = packageManager?.split("@") ?? []
+const pms = Object.values(rootFiles)
+let [pm, v] = [packageManager].flat()
+  .find(pm => pm?.name in pms)?.split("@") ?? []
 
-pm  ??= Object.values(rootFiles).find(pm => engines?.[pm])
+pm  ??= pms.find(pm => engines?.[pm])
 pm  ??= name ?? rootFiles[match] ?? "npm"
 pmv ??= v ?? "latest"
 
