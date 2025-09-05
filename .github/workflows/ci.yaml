@@ -50,7 +50,15 @@ jobs:
         todo-annotate:  ${{ inputs.todo-annotate  }}
         todo-fail-warn: ${{ inputs.todo-fail-warn }}
 
+    - name: Build
+      id: build
+      if: steps.node.outputs.build != ''
+      run: ${{ steps.node.outputs.build }}
+      env:
+        NODE_OPTIONS: ${{ env.NODE_OPTIONS }} ${{ steps.node.outputs.options }}
+
     - name: Run tests
+      id: test
       run: ${{ steps.node.outputs.test }}
       env:
         NODE_OPTIONS: ${{ env.NODE_OPTIONS }} ${{ steps.node.outputs.options }}

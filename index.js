@@ -3,7 +3,7 @@ import * as metadata from "#metadata"
 import { toINI, newline } from "utils"
 
 const { INPUT_REPORTER, GITHUB_OUTPUT } = process.env
-const { packageManager,  dependencies } = metadata.package
+const { packageManager, dependencies, scripts } = metadata.package
 const [pm] = packageManager.split("@")
 let [dependency] = Object.keys(dependencies ?? {}) ?? []
 dependency ??= "node-test-reporter-github"
@@ -14,6 +14,9 @@ const install = {
   yarn: "yarn install --immutable",
   npm:  "npm ci",
 }[pm]
+
+if (scripts.build)
+  var build = pm === "yarn" ? "yarn run build" : `${pm} run --if-present build`
 
 const test = pm === "yarn" ? "yarn test" : `${pm} run --if-present test`
 
@@ -29,5 +32,5 @@ if (reporter !== "false") {
   options = `--test-reporter=${reporter} --test-reporter-destination=$GITHUB_STEP_SUMMARY`
 }
 
-ini += newline + toINI({ install, test, add, options })
+ini += newline + toINI({ install, build, test, add, options })
 if (GITHUB_OUTPUT) await fs.appendFile(GITHUB_OUTPUT, ini)
