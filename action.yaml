@@ -33,6 +33,10 @@ outputs:
     description: NODE_OPTIONS
     value: ${{ steps.metadata.outputs.options }}
 
+  build:
+    description: The scripts.build command.
+    value: ${{ steps.metadata.outputs.build }}
+
   test:
     description: The scripts.test command.
     value: ${{ steps.metadata.outputs.test }}

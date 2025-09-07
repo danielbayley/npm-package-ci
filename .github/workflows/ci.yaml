@@ -52,7 +52,7 @@ jobs:
 
     - name: Build
       id: build
-      if: steps.node.outputs.build != ''
+      if: steps.node.outputs.build != 'undefined'
       run: ${{ steps.node.outputs.build }}
       env:
         NODE_OPTIONS: ${{ env.NODE_OPTIONS }} ${{ steps.node.outputs.options }}
