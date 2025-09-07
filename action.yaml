@@ -29,6 +29,10 @@ outputs:
     description: Detected package.* file.
     value: ${{ steps.metadata.outputs.package-file }}
 
+  metadata:
+    description: Project metadata from the package.* file.
+    value: ${{ toJSON(steps.metadata.outputs) }}
+
   options:
     description: NODE_OPTIONS
     value: ${{ steps.metadata.outputs.options }}
