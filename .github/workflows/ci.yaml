@@ -30,7 +30,7 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        node-version: ${{ fromJson(format('[{0}]', inputs.node-version || '20, 21, 22, 23, 24')) }}
+        node-version: ${{ fromJSON(format('[{0}]', inputs.node-version || '20, 21, 22, 23, 24')) }}
 
     env: # https://nodejs.org/api/test.html#test-reporters
       NODE_OPTIONS: --test-reporter=spec --test-reporter-destination=stdout
@@ -61,3 +61,36 @@ jobs:
       run: ${{ steps.node.outputs.test }}
       env:
         NODE_OPTIONS: ${{ env.NODE_OPTIONS }} ${{ steps.node.outputs.options }}
+
+    - name: Publish
+      id: publish
+      if: steps.test.conclusion == 'success' && steps.node.outputs.publish != ''
+      run: ${{ steps.node.outputs.publish }}
+
+    - name: Pack
+      id: pack
+      if: steps.publish.conclusion == 'skipped' && hashFiles('.github/workflows/publish.y*ml', '.github/workflows/release.y*ml') != '' && hashFiles('*-*.*.*.tgz') == ''
+      run: ${{ steps.node.outputs.package-manager }} pack --json | tail +5 | jq --raw-output '"tarball=\(.filename)"' >> $GITHUB_OUTPUT
+
+
+    - run: echo '${{ steps.pack.outputs.tarball }}'
+
+
+    - name: Upload tarball
+      id: upload
+      if: steps.pack.conclusion == 'success'
+      continue-on-error: true
+      uses: actions/upload-artifact@v4
+      with:
+        path: ${{ steps.pack.outputs.tarball }}
+
+  Clean:
+    runs-on: ubuntu-latest
+    if: github.repository == format('{0}/{1}', github.repository_owner, 'npm-package-ci')
+    steps:
+    - name: Clean
+      run: gh run delete `gh run list --workflow ci.yml --json databaseId --jq '.[0].databaseId'`
+      continue-on-error: true
+      env:
+        GH_TOKEN: ${{ github.token }}
+        GH_REPO:  ${{ github.repository }}
