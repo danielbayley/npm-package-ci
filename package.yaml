@@ -29,7 +29,7 @@ exports: ./index.js
 engines:
   node: ">=20"
   pnpm: ">=10"
-packageManager: pnpm@10.13.1
+packageManager: pnpm@10.15.1
 pnpm:
   requiredScripts: [prepare, test]
 
