@@ -22,7 +22,8 @@ const install = {
 if (scripts.build)
   var build = pm === "yarn" ? "yarn run build" : `${pm} run --if-present build`
 
-const test = pm === "yarn" ? "yarn test" : `${pm} run --if-present test`
+if (scripts.test)
+  var test = pm === "yarn" ? "yarn test" : `${pm} run --if-present test`
 
 let add, options, reporter = INPUT_REPORTER
 if (reporter !== "false") {

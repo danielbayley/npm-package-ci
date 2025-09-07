@@ -59,6 +59,7 @@ jobs:
 
     - name: Run tests
       id: test
+      if: steps.node.outputs.test != 'undefined'
       run: ${{ steps.node.outputs.test }}
       env:
         NODE_OPTIONS: ${{ env.NODE_OPTIONS }} ${{ steps.node.outputs.options }}
