@@ -43,7 +43,7 @@ devDependencies:
 
 scripts:
   prepare: pnpm --recursive prepare
-  pnpm:devPreinstall: '[ -z $GITHUB_ACTIONS || -r package.json ] || yq --output-format json package.yaml > package.json'
+  pnpm:devPreinstall: '[ -z $GITHUB_ACTIONS ] || [ -r package.json ] || yq --output-format json package.yaml > package.json'
   postinstall: node index.js
 
   test: pnpm --stream --reporter-hide-prefix --recursive test
