@@ -33,6 +33,9 @@ engines:
 packageManager: pnpm@10.15.1
 pnpm:
   requiredScripts: [prepare, test]
+  onlyBuiltDependencies:
+  - canvas
+  - puppeteer
 
 dependencies:
   node-test-reporter-github: workspace:^
