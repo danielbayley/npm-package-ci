@@ -36,5 +36,8 @@ if (reporter !== "false") {
   options = `--test-reporter=${reporter} --test-reporter-destination=$GITHUB_STEP_SUMMARY`
 }
 
-ini += newline + toINI({ install, build, test, add, options })
+const script = Object.keys(scripts ?? {}).find(script => ["publish", "release"].includes(script))
+if (script) var publish = `${pm} run ${script}`
+
+ini += newline + toINI({ install, build, test, publish, add, options })
 if (GITHUB_OUTPUT) await fs.appendFile(GITHUB_OUTPUT, ini)

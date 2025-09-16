@@ -25,6 +25,11 @@ on:
         type: boolean
         default: true
 
+      publish-script:
+        description: Run the publish, release, or given package.* script.
+        type: string
+        default: false
+
 jobs:
   Node:
     runs-on: ubuntu-latest
@@ -61,6 +66,10 @@ jobs:
       run: ${{ steps.node.outputs.test }}
       env:
         NODE_OPTIONS: ${{ env.NODE_OPTIONS }} ${{ steps.node.outputs.options }}
+
+    - name: Publish
+      if: inputs.publish-script != 'false' && steps.test.conclusion == 'success' && steps.node.outputs.publish != 'undefined'
+      run: ${{ inputs.publish-script == 'true' && steps.node.outputs.publish || format('{0} run {1}', steps.node.outputs.package-manager, inputs.publish-script) }}
 
   Clean:
     runs-on: ubuntu-latest

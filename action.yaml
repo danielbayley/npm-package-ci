@@ -45,6 +45,10 @@ outputs:
     description: The scripts.test command.
     value: ${{ steps.metadata.outputs.test }}
 
+  publish:
+    description: The scripts.publish, scripts.release, or given script command.
+    value: ${{ steps.metadata.outputs.publish }}
+
 runs:
   using: composite
   steps:
