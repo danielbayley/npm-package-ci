@@ -139,5 +139,4 @@ outputs:
 
 runs:
   using: node20
-  #pre-if: hashFiles('package.yaml') != ''
   main: index.mjs

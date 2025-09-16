@@ -33,7 +33,6 @@ if (reporter !== "false") {
     yarn: `yarn add ${reporter}`,
     npm:  `npm  add ${reporter} --no-save`,
   }[pm]
-
   options = `--test-reporter=${reporter} --test-reporter-destination=$GITHUB_STEP_SUMMARY`
 }
 
