@@ -138,5 +138,5 @@ outputs:
     description: Detected package manager corresponding 'test' command.
 
 runs:
-  using: node20
+  using: node24
   main: index.mjs
