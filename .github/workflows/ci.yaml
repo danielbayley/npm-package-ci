@@ -1,10 +1,10 @@
 # https://docs.github.com/actions/using-workflows/workflow-syntax-for-github-actions
 name: CI
 on:
-  workflow_dispatch:
   push:
-    branches: [main]
+  pull_request:
 
+  workflow_dispatch:
   workflow_call:
     inputs:
       node-version:
@@ -68,7 +68,7 @@ jobs:
         NODE_OPTIONS: ${{ env.NODE_OPTIONS }} ${{ steps.node.outputs.options }}
 
     - name: Publish
-      if: inputs.publish-script != 'false' && steps.test.conclusion == 'success' && steps.node.outputs.publish != 'undefined'
+      if: github.ref_name == github.event.repository.default_branch && inputs.publish-script != 'false' && steps.test.conclusion == 'success' && steps.node.outputs.publish != 'undefined'
       run: ${{ inputs.publish-script == 'true' && steps.node.outputs.publish || format('{0} run {1}', steps.node.outputs.package-manager, inputs.publish-script) }}
 
   Clean:
