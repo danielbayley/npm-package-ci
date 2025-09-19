@@ -20,6 +20,9 @@ inputs:
   todo-fail-warn:
     description: Show failed tests marked .todo as warnings.
 
+  ignore-scripts:
+    description: Ignore lifecycle scripts on install.
+
 outputs:
   package-manager:
     description: Detected package manager.
@@ -100,4 +103,4 @@ runs:
     run: ${{ steps.metadata.outputs.add }}
 
   - shell: sh
-    run: ${{ steps.metadata.outputs.install }}
+    run: ${{ steps.metadata.outputs.install }} ${{ inputs.ignore-scripts != 'false' && github.repository != format('{0}/{1}', github.repository_owner, 'npm-package-ci') && '--ignore-scripts' || '' }}

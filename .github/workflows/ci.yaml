@@ -30,6 +30,11 @@ on:
         type: string
         default: false
 
+      ignore-scripts:
+        description: Ignore lifecycle scripts on install.
+        type: boolean
+        default: true
+
 jobs:
   Node:
     runs-on: ubuntu-latest
@@ -54,6 +59,7 @@ jobs:
         test-reporter:  ${{ inputs.test-reporter  }}
         todo-annotate:  ${{ inputs.todo-annotate  }}
         todo-fail-warn: ${{ inputs.todo-fail-warn }}
+        ignore-scripts: ${{ inputs.ignore-scripts }}
 
     - name: Build
       id: build
