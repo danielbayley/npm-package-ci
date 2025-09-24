@@ -57,6 +57,6 @@ scripts:
 
   test: pnpm --stream --reporter-hide-prefix --recursive test
 
-  reinstall: pnpm zap && pnpm install
-  clean: rm -f {*,.}/package.json **/fixtures/*.json || true
+  clean: git clean -X --force
   zap: pnpm clean && rm -rf **/node_modules || true
+  reinstall: pnpm zap && pnpm install
