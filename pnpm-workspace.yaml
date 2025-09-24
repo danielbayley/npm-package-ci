@@ -9,3 +9,6 @@ catalog:
   jsdom: ^27.0.0
   publint: ^0.3.13
   yaml: ^2.8.1
+
+# https://pnpm.io/settings
+strictDepBuilds: true
