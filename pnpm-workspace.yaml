@@ -11,4 +11,5 @@ catalog:
   yaml: ^2.8.1
 
 # https://pnpm.io/settings
+catalogMode: strict
 strictDepBuilds: true
