@@ -4,7 +4,8 @@ name: node-test-reporter-github
 description: Informative node --test reporter for GitHub Actions.
 keywords:
 - ci
-- test
+- linter
+- testing
 - github
 - actions
 - reporter

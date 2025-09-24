@@ -3,7 +3,9 @@ version: 0.0.0
 name: "@danielbayley/node-test-parser"
 description: Parse events from node --test into a more useable data structure.
 keywords:
-- test
+- ci
+- linter
+- testing
 - events
 - emit
 - reporter

@@ -4,10 +4,15 @@ name: npm-package-ci
 description: Simple CI for your npm packages.
 keywords:
 - ci
-- test
+- linter
+- testing
 - github
 - actions
 - reporter
+- publish
+- release
+- continuous
+- delivery
 
 homepage: https://github.com/danielbayley/npm-package-ci#readme
 repository: danielbayley/npm-package-ci
