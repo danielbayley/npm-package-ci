@@ -24,7 +24,7 @@ author:
   url: danielbayley.dev
 
 license: MIT
-funding: https://github.com/sponsors/danielbayley
+funding: https://github.com/danielbayley/npm-package-ci?sponsor=1
 
 private: true
 type: module
