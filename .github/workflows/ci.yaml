@@ -35,6 +35,11 @@ on:
         type: boolean
         default: true
 
+      security-provenance:
+        description: Enable extra security provenance checks.
+        type: boolean
+        default: true
+
 jobs:
   Node:
     runs-on: ubuntu-latest
@@ -50,6 +55,15 @@ jobs:
     steps:
     - name: Checkout
       uses: actions/checkout@v4
+      with:
+        fetch-depth: 0
+
+    # https://github.com/danielroe/provenance-action#readme
+    - name: Security check provenance downgrades
+      if: inputs.security-provenance != false && inputs.security-provenance != 'false'
+      uses: danielroe/provenance-action@main
+      with:
+        fail-on-provenance-change: true
 
     - name: Install Node.js ${{ matrix.node-version }} and dependencies
       id: node
